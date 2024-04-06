@@ -7,14 +7,8 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 import { cn } from "@/shared/lib/utils";
+import { CustomCardProps } from "./types";
 
-type CustomCardProps = React.ComponentProps<typeof Card> & {
-  className?: string;
-  title: string;
-  description?: string;
-  img?: React.ReactNode;
-  footer?: React.ReactNode;
-};
 const CustomCard = ({
   title,
   description,
@@ -31,7 +25,7 @@ const CustomCard = ({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>{content}</CardContent>
+      <CardContent>{props.children}</CardContent>
       <CardFooter>{footer}</CardFooter>
     </Card>
   );
