@@ -22,6 +22,11 @@
       "import": "./dist/button/ui-xefi.es.js",
       "require": "./dist/button/ui-xefi.cjs.js",
       "types": "./dist/button/index.d.ts"
+    },
+    "./card": {
+      "import": "./dist/card/ui-xefi.es.js",
+      "require": "./dist/card/ui-xefi.cjs.js",
+      "types": "./dist/card/index.d.ts"
     }
   },
   "typesVersions": {
