@@ -22,6 +22,11 @@
       "import": "./dist/button/ui-xefi.es.js",
       "require": "./dist/button/ui-xefi.cjs.js",
       "types": "./dist/button/index.d.ts"
+    },
+    "./card": {
+      "import": "./dist/card/ui-xefi.es.js",
+      "require": "./dist/card/ui-xefi.cjs.js",
+      "types": "./dist/card/index.d.ts"
     }
   },
   "typesVersions": {
@@ -37,7 +42,8 @@
     "build:dev": "tsc && vite build --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "commit-all": "git status && git add . && git commit -m \"$npm_config_message\" && git flow publish && git flow finish"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
