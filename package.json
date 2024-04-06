@@ -42,8 +42,7 @@
     "build:dev": "tsc && vite build --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest",
-    "commit-all": "git status && git add . && git commit -m \"$npm_config_message\" && git flow publish && git flow finish"
+    "test": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
