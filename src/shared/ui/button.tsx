@@ -5,11 +5,10 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/shared/lib/utils";
 import { ButtonProps } from "../../button/types";
 
-// Styles par défaut pour les variantes et tailles de bouton
 const defaultButtonVariants = {
   default: "text-white bg-primary hover:opacity-80 transition-all",
   outline:
-    "border border-primary-foreground bg-background hover:opacity-80 transition-all ",
+    "border border-primary-foreground bg-background hover:opacity-80 transition-all",
   destructive:
     "bg-destructive text-destructive-foreground hover:bg-destructive/90",
   secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -24,7 +23,6 @@ const defaultButtonSizes = {
   icon: "h-10 w-10",
 };
 
-// Création des styles de bouton avec Class Variance Authority
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
@@ -39,7 +37,6 @@ const buttonVariants = cva(
   }
 );
 
-// Définition du composant bouton
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
