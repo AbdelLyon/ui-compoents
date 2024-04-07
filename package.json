@@ -27,6 +27,11 @@
       "import": "./dist/card/ui-xefi.es.js",
       "require": "./dist/card/ui-xefi.cjs.js",
       "types": "./dist/card/index.d.ts"
+    },
+    "./query": {
+      "import": "./dist/query/ui-xefi.es.js",
+      "require": "./dist/query/ui-xefi.cjs.js",
+      "types": "./dist/query/index.d.ts"
     }
   },
   "typesVersions": {
@@ -51,7 +56,8 @@
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
-    "@tanstack/react-query": "^5.28.14",
+    "@tanstack/react-query": "^5.29.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -63,11 +69,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-resizable-panels": "^2.0.16",
+    "react-test-renderer": "^18.2.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
     "vite-tsconfig-paths": "^4.3.2",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
