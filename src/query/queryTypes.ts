@@ -1,4 +1,4 @@
-import { array, literal, number, union, z } from "zod";
+import { z } from "zod";
 
 const NestedFilter = z.object({
   field: z.string(),
