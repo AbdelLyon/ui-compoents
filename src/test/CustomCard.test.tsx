@@ -1,33 +1,28 @@
-import { render } from "@testing-library/react";
-import CustomCard from "@/card/CustomCard";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import CustomCard from "../card/CustomCard";
 
 describe("CustomCard", () => {
-  it("renders CustomCard component with title and description", () => {
-    const title = "test Title";
-    const description = "Test Description";
-    const { getByText } = render(
-      <CustomCard title={title} description={description} />
-    );
-
-    expect(getByText(title)).toBeInTheDocument();
-    expect(getByText(description)).toBeInTheDocument();
+  it("does not render footer when footer prop is not provided", () => {
+    render(<CustomCard title="Default Title" />);
+    const footer = screen.queryByRole("contentinfo");
+    expect(footer).not.toBeInTheDocument();
   });
 
-  it("renders CustomCard component with content and footer", () => {
-    const content = "Test Content";
-    const footer = <div>Test Footer</div>;
-    const image = <img src="test.png" alt="test" />;
-    const { getByText } = render(
+  it("test", () => {
+    render(
       <CustomCard
-        content={content}
-        img={image}
-        footer={footer}
-        title="Test Title"
-      />
+        title="Default Title"
+        description="Default Description"
+        footer={<p>Footer</p>}
+      >
+        <p>Card children</p>
+      </CustomCard>
     );
 
-    expect(getByText(content)).toBeInTheDocument();
-    expect(getByText("Test Footer")).toBeInTheDocument();
+    expect(screen.getByText("Default Title")).toBeInTheDocument();
+    expect(screen.getByText("Default Description")).toBeInTheDocument();
+    expect(screen.getByText("Card children")).toBeInTheDocument();
+    expect(screen.getByText("Footer")).toBeInTheDocument();
   });
 });
