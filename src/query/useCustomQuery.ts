@@ -3,7 +3,7 @@ import { Search } from "./queryTypes";
 
 export type UseCustomQuery<T> = {
   queryKey: QueryKey;
-  request: ({}) => Promise<T[]>;
+  request: ({ search }: { search?: Partial<Search> }) => Promise<T[]>;
   search: Partial<Search>;
   enabled?: boolean;
 };
@@ -11,7 +11,7 @@ export type UseCustomQuery<T> = {
 const useCustomQuery = <T>({
   queryKey,
   request,
-  search: { includes, filters, sorts, instructions, scopes, gates },
+  search: { includes, filters, sorts, instructions, scopes, gates, aggregates },
   enabled,
 }: UseCustomQuery<T>) => {
   const { data, isLoading, isFetching, isSuccess, refetch } = useQuery({
@@ -24,7 +24,8 @@ const useCustomQuery = <T>({
           ...(sorts && sorts.length > 0 && { sorts }),
           ...(instructions && instructions.length > 0 && { instructions }),
           ...(scopes && scopes.length > 0 && { scopes }),
-          ...(gates && gates.length > 0 && { scopes }),
+          ...(gates && gates.length > 0 && { gates }),
+          ...(aggregates && aggregates.length > 0 && { aggregates }),
         },
       }),
     enabled,
