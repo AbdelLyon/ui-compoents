@@ -19,6 +19,7 @@ export default defineConfig({
         button: path.resolve(__dirname, "src/button"),
         card: path.resolve(__dirname, "src/card"),
         query: path.resolve(__dirname, "src/query"),
+        form: path.resolve(__dirname, "src/form"),
         "": path.resolve(__dirname, "src/index.ts"),
       },
       name: "ui-xefi",

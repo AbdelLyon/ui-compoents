@@ -1,10 +1,10 @@
 import { QueryKey, useQuery } from "@tanstack/react-query";
-import { Search } from "./queryTypes";
+import { QuerySearch } from "./queryTypes";
 
 export type UseCustomQuery<T> = {
   queryKey: QueryKey;
-  request: ({ search }: { search?: Partial<Search> }) => Promise<T[]>;
-  search: Partial<Search>;
+  request: ({ search }: { search?: Partial<QuerySearch> }) => Promise<T[]>;
+  search: Partial<QuerySearch>;
   enabled?: boolean;
 };
 
