@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { Search } from "../../query";
+import { QuerySearch } from "../../query";
 
 export const posts = [
   { id: 1, title: "Post 1" },
@@ -18,12 +18,12 @@ export const posts = [
 ];
 
 export const mockPostsPaginate = vi.fn(
-  async ({ search }: { search: Partial<Search> }) => {
+  async ({ search }: { search: Partial<QuerySearch> }) => {
     const paginatedResult = posts.slice(
       (search.page ? search.page - 1 : 0) * 10,
       (search.page ? search.page : 0) * 10
     );
-    // await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     return paginatedResult;
   }
 );

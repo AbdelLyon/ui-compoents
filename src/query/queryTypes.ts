@@ -49,7 +49,7 @@ interface Instruction {
   fields: InstructionField[];
 }
 
-export interface Search {
+export interface QuerySearch {
   scopes: Scope[];
   filters: (NestedFilter | { nested: NestedFilter[] })[];
   sorts: Sort[];
