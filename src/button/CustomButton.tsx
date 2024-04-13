@@ -1,23 +1,12 @@
 import { Button } from "@/shared/ui/button";
-import { type ButtonProps as Props } from "./types";
-import { ReactElement } from "react";
+import { ButtonProps } from "./types";
 import { cn } from "../shared/lib/utils";
-
-type ButtonProps =
-  | ({
-      icon: ReactElement;
-      iconPosition: "right" | "left";
-    } & Props)
-  | ({
-      icon?: ReactElement;
-      iconPosition?: never;
-    } & Props);
 
 const CustomButton = ({
   icon,
   iconPosition,
   ...props
-}: ButtonProps): JSX.Element => {
+}: ButtonProps<true> | ButtonProps<false>): JSX.Element => {
   return (
     <Button
       {...props}

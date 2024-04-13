@@ -2,39 +2,59 @@ import { Input } from "../shared/ui/input";
 import { debounce } from "@mui/material";
 import { InputProps } from "./types";
 import { cn } from "../shared/lib/utils";
-import { useState } from "react";
+import {
+  HTMLAttributes,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+  memo,
+} from "react";
 import { Eye, EyeOff, Search } from "lucide-react";
 
-export const InputCustom = (props: InputProps) => {
-  const {
-    type,
-    classNameContainer,
-    label,
-    classNameError,
-    classNameIcon,
-    onChange,
-    Icon,
-    error,
-    ...rest
-  } = props;
+const InputCustom = ({
+  type,
+  classNameContainer,
+  label,
+  classNameError,
+  classNameIcon,
+  handelChange,
+  Icon,
+  error,
+  value,
+  placeholder,
+  className,
+}: InputProps & HTMLAttributes<HTMLInputElement>) => {
   const [searchValue, setSearchValue] = useState("");
-  const [showIconPassword, setShowIconPassword] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const ref = useRef<HTMLInputElement | null>(null);
 
-  const debouncedHandleChange = debounce((e) => {
-    onChange?.(e.target.value);
-    if (type === "search") {
-      setSearchValue(e.target.value);
+  const debouncedHandleChange = useCallback(
+    debounce((e) => {
+      handelChange?.(e.target.value);
+      if (type === "search") {
+        setSearchValue(e.target.value);
+      }
+    }, 500),
+    [type, handelChange]
+  );
+
+  useEffect(() => {
+    if (ref.current && value !== undefined) {
+      ref.current.value = value;
     }
-  }, 500);
+  }, [value]);
 
   return (
-    <div className={cn("mb-2", classNameContainer)}>
+    <div className={cn("mb-3", classNameContainer)}>
       {label && <label>{label}</label>}
       <div className="relative">
         <Input
-          {...rest}
           onChange={(e) => debouncedHandleChange(e)}
-          autoComplete="off"
+          type={isPasswordVisible ? "text" : type}
+          ref={ref}
+          placeholder={placeholder}
+          className={className}
         />
         {Icon && (
           <div
@@ -46,13 +66,13 @@ export const InputCustom = (props: InputProps) => {
         )}
         {type === "password" && (
           <>
-            {showIconPassword ? (
+            {isPasswordVisible ? (
               <EyeOff
                 className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
                 style={{ top: "50%", transform: "translateY(-50%)" }}
                 size={16}
                 onClick={() => {
-                  setShowIconPassword(false);
+                  setIsPasswordVisible(false);
                 }}
               />
             ) : (
@@ -61,7 +81,7 @@ export const InputCustom = (props: InputProps) => {
                 style={{ top: "50%", transform: "translateY(-50%)" }}
                 size={16}
                 onClick={() => {
-                  setShowIconPassword(true);
+                  setIsPasswordVisible(true);
                 }}
               />
             )}
@@ -81,3 +101,5 @@ export const InputCustom = (props: InputProps) => {
     </div>
   );
 };
+
+export default memo(InputCustom);

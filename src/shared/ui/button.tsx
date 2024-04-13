@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/shared/lib/utils";
-import { ButtonProps } from "../../button/types";
+import { Props } from "../../button/types";
 
 const defaultButtonVariants = {
   default: "text-white bg-primary hover:opacity-80 transition-all",
@@ -37,7 +37,7 @@ const buttonVariants = cva(
   }
 );
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, Props>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (

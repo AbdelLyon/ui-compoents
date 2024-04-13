@@ -1,10 +1,9 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback, memo } from "react";
 import { useInView } from "react-intersection-observer";
 import { cn } from "../shared/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { RenderLoader } from "../shared/ui/LoadingIndicator";
-import { SelectSearchProps } from "./types";
-import Input from "./Input";
+import { ExtendedProps, SelectSearchProps } from "./types";
 import {
   Command,
   CommandGroup,
@@ -12,9 +11,7 @@ import {
   CommandList,
 } from "@/shared/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
-
-type ExtendedProps = { id: string; [key: string]: string };
-
+import InputCustom from "./InputCustom";
 const SelectSearch = <T extends ExtendedProps>({
   options,
   onSelectChange,
@@ -30,9 +27,9 @@ const SelectSearch = <T extends ExtendedProps>({
   isSearchable,
   isFetchingNextPage,
   width,
+  ...props
 }: SelectSearchProps<T>) => {
-  const valueSelected = options?.find((item) => item.id === value);
-  const [open, setOpen] = useState(false);
+  const valueSelected = options?.find((item) => item?.id === value);
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -51,26 +48,22 @@ const SelectSearch = <T extends ExtendedProps>({
   const handleSelectChange = useCallback(
     (item: T) => {
       onSelectChange?.(item);
-      setOpen(false);
     },
     [onSelectChange]
   );
 
   return (
-    <Popover
-      open={open}
-      onOpenChange={(open) => {
-        setOpen(open);
-        if (open && onSearchChange) onSearchChange("");
-      }}
-    >
-      {label && <label htmlFor="">{label}</label>}
+    <Popover {...props}>
+      {label && (
+        <label style={{ width }} className="text-start">
+          {label}
+        </label>
+      )}
 
       <PopoverTrigger asChild>
         <div
-          aria-expanded={open}
           className={cn(
-            "w-[400px] flex justify-between items-center px-3 py-2 border border-border text-text bg-transparent rounded-md cursor-pointer",
+            "w-[400px] flex justify-between items-center px-3 h-11 border border-border text-text bg-transparent rounded-md cursor-pointer",
             { "text-muted-foreground": value === "" },
             className
           )}
@@ -94,10 +87,10 @@ const SelectSearch = <T extends ExtendedProps>({
       >
         <Command>
           {isSearchable && (
-            <Input
+            <InputCustom
               name="search"
               className={`${error && "border-red-600/50"}`}
-              onUncontrolledChange={handleSearchChange}
+              handelChange={handleSearchChange}
               placeholder="Rechercher..."
               classNameError="text-[12px] text-red-600/70"
               type="search"
@@ -111,7 +104,7 @@ const SelectSearch = <T extends ExtendedProps>({
                 value={placeholder}
                 onSelect={(currentValue) => {
                   const newValue = options?.find(
-                    (item) => item.id === currentValue
+                    (item) => item?.id === currentValue
                   );
                   if (newValue) {
                     handleSelectChange(newValue);
@@ -122,14 +115,14 @@ const SelectSearch = <T extends ExtendedProps>({
               </CommandItem>
               {options?.map((item, index) => (
                 <CommandItem
-                  key={item.id}
+                  key={item?.id}
                   ref={options.length === index + 1 ? ref : null}
                   className="flex justify-between py-2
                   "
-                  value={item.id}
+                  value={item?.id}
                   onSelect={(currentValue) => {
                     const newValue = options?.find(
-                      (item) => item.id === currentValue
+                      (item) => item?.id === currentValue
                     );
                     if (newValue) {
                       handleSelectChange(item);
@@ -137,12 +130,12 @@ const SelectSearch = <T extends ExtendedProps>({
                   }}
                 >
                   <p className="truncate">
-                    {...selectionKeys.map((s) => `${item[s]} `)}
+                    {...selectionKeys.map((s) => `${item?.[s]} `)}
                   </p>
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === item.id
+                      value === item?.id
                         ? "opacity-100 text-green-600"
                         : "opacity-0"
                     )}
@@ -167,4 +160,4 @@ const SelectSearch = <T extends ExtendedProps>({
   );
 };
 
-export default SelectSearch;
+export default memo(SelectSearch);

@@ -2,7 +2,7 @@ import { cn } from "../shared/lib/utils";
 import { Checkbox } from "../shared/ui/checkbox";
 import { CheckboxProps } from "./types";
 
-export const InputCheckbox = (props: Omit<CheckboxProps, "type">) => {
+const InputCheckbox = (props: Omit<CheckboxProps, "type">) => {
   const { className, htmlForm, label, ...rest } = props;
   return (
     <div className={cn("flex items-center space-x-2", className)}>
@@ -13,3 +13,5 @@ export const InputCheckbox = (props: Omit<CheckboxProps, "type">) => {
     </div>
   );
 };
+
+export default InputCheckbox;
