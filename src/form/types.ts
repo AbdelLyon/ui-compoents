@@ -1,19 +1,19 @@
 import { FormikErrors } from "formik";
-import { ReactElement } from "react";
+import { CSSProperties, HTMLAttributes, ReactElement } from "react";
 
-export type CommonInputProps = {
+export interface CommonInputProps<T> extends HTMLAttributes<T> {
   placeholder?: string;
-  name?: string;
-  disabled?: boolean;
-  classname?: string;
+  className?: string;
+  classNameError?: string;
   label?: string;
-};
-
-export interface InputProps extends CommonInputProps {
-  type:
+  id?: string;
+  ref?: React.Ref<T>;
+  style?: CSSProperties;
+  error?: string | FormikErrors<string>;
+  name?: string;
+  type?:
     | "text"
     | "number"
-    | "button"
     | "date"
     | "datetime-local"
     | "email"
@@ -21,10 +21,34 @@ export interface InputProps extends CommonInputProps {
     | "month"
     | "password"
     | "range"
-    | "reset";
-  error?: string | FormikErrors<any> | string[] | FormikErrors<any>[];
-  handleChange?: (value: string) => void;
+    | "search"
+    | "checkbox";
+}
+
+export interface InputProps extends CommonInputProps<HTMLInputElement> {
+  onUncontrolledChange?: (value: string) => void;
   isError?: boolean;
   Icon?: ReactElement;
-  classnameContainer?: string;
+  classNameContainer?: string;
+  classNameIcon?: string;
+  onOpenChange: ((open: boolean) => void) | undefined;
+}
+export interface CheckboxProps extends CommonInputProps<HTMLButtonElement> {
+  htmlForm?: string;
+  checked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+}
+
+export interface SelectSearchProps<T> extends CommonInputProps<HTMLDivElement> {
+  options: T[];
+  selectionKeys: string[];
+  onSelectChange: (value: T) => void;
+  onSearchChange?: (value: string) => void;
+  fetchNextPage: any;
+  placeholderSearch?: string;
+  value: string;
+  isSearchable?: boolean;
+  isFetchingNextPage?: boolean;
+  isFetching?: boolean;
+  width?: number;
 }

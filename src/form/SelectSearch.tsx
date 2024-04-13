@@ -1,182 +1,168 @@
-import { useState } from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "../shared/ui/popover";
-import { Button } from "../shared/ui/button";
+import { useEffect, useState, useCallback } from "react";
+import { useInView } from "react-intersection-observer";
 import { cn } from "../shared/lib/utils";
-import { Command, CommandGroup, CommandItem } from "../shared/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { RenderLoader } from "../shared/ui/LoadingIndicator";
-import { InputSearch } from "./InputSearch";
+import { SelectSearchProps } from "./types";
+import Input from "./Input";
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from "@/shared/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 
-type DataType = {
-  id?: string;
-  title: string;
-  body: string;
-};
+type ExtendedProps = { id: string; [key: string]: string };
 
-type Props<T extends DataType> = {
-  placeholder: string;
-  field: string;
-  value?: string;
-  setFieldValue: any;
-  data?: T[];
-  handleChange: (value: string) => void;
-  isFetching?: boolean;
-  isFetchingNextPage?: boolean;
-  placeholderSearch?: string;
-  fetchNextPage?: Function;
-  isSearchable?: boolean;
-  classNamePopoverContent?: string;
-  className?: string;
-  label?: string;
-  error?: string;
-  isError?: boolean;
-  nameSearch?: string;
-};
-
-const LoadingOverlay = ({ isLoading }: { isLoading: boolean }) => {
-  return (
-    isLoading && (
-      <div className="fixed top-1 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px]">
-        <RenderLoader className="fixed bottom-2 flex justify-center text-primary text-center right-0 w-full z-10" />
-      </div>
-    )
-  );
-};
-
-const ErrorMessage = ({ isError, error }: { isError: any; error: any }) => {
-  return isError && <p className="text-red-600/80 mt-1 text-[12px]">{error}</p>;
-};
-
-const SelectItem = ({
-  item,
-  isSelected,
-  onSelect,
-}: {
-  item: DataType;
-  isSelected: boolean;
-  onSelect: (value: string) => void;
-}) => {
-  return (
-    <CommandItem
-      className="flex justify-between"
-      value={item.id}
-      onSelect={(currentValue) => {
-        onSelect(currentValue !== item.id ? currentValue : "");
-      }}
-    >
-      {item.title}
-      <Check
-        className={cn("mr-2 h-4 w-4", {
-          "opacity-100 text-green-600": isSelected,
-          "opacity-0": !isSelected,
-        })}
-      />
-    </CommandItem>
-  );
-};
-
-const SelectSearch = <T extends DataType>({
+const SelectSearch = <T extends ExtendedProps>({
+  options,
+  onSelectChange,
   placeholder,
-  setFieldValue,
-  field,
-  value,
-  data,
-  handleChange,
-  isFetchingNextPage,
-  isFetching,
-  placeholderSearch,
-  classNamePopoverContent,
-  isSearchable = true,
-  className,
-  label,
-  nameSearch,
   error,
-  isError,
-}: Props<T>) => {
+  className,
+  classNameError,
+  selectionKeys,
+  onSearchChange,
+  fetchNextPage,
+  value,
+  label,
+  isSearchable,
+  isFetchingNextPage,
+  width,
+}: SelectSearchProps<T>) => {
+  const valueSelected = options?.find((item) => item.id === value);
   const [open, setOpen] = useState(false);
-  const valueSelected = data?.find((item) => item.id === value);
-  const isLoading = isFetchingNextPage || isFetching;
+  const { ref, inView } = useInView();
 
-  const getValue = () => {
-    if (!value) return placeholder;
-    const { title } = valueSelected ?? {};
-    return title;
-  };
+  useEffect(() => {
+    if (inView && fetchNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      onSearchChange?.(value);
+    },
+    [onSearchChange]
+  );
+
+  const handleSelectChange = useCallback(
+    (item: T) => {
+      onSelectChange?.(item);
+      setOpen(false);
+    },
+    [onSelectChange]
+  );
 
   return (
     <Popover
       open={open}
       onOpenChange={(open) => {
         setOpen(open);
-        if (open) {
-          handleChange("");
-        }
+        if (open && onSearchChange) onSearchChange("");
       }}
     >
       {label && <label htmlFor="">{label}</label>}
 
       <PopoverTrigger asChild>
-        <Button
-          role="combobox"
+        <div
           aria-expanded={open}
           className={cn(
-            "w-full justify-between border border-border text-text bg-transparent",
+            "w-[400px] flex justify-between items-center px-3 py-2 border border-border text-text bg-transparent rounded-md cursor-pointer",
             { "text-muted-foreground": value === "" },
             className
           )}
+          style={{
+            width,
+          }}
         >
-          <div className="truncate">{getValue()}</div>
-          <ChevronsUpDown className="ml-2 h-[12px] w-[12px] shrink-0 opacity-50" />
-        </Button>
+          <p className="truncate text-sm">
+            {value
+              ? selectionKeys.map((s) => `${valueSelected?.[s]} `)
+              : placeholder}
+          </p>
+          <ChevronsUpDown className="right-4 h-[12px] w-[12px] shrink-0 opacity-50" />
+        </div>
       </PopoverTrigger>
       <PopoverContent
-        className={cn("max-w-[300px] mt-1 p-3", classNamePopoverContent)}
+        className={cn("w-[400px] mt-1 p-3")}
+        style={{
+          width,
+        }}
       >
         <Command>
           {isSearchable && (
-            <InputSearch
-              classname="h-9 mb-2"
-              placeholder={placeholderSearch}
-              name={nameSearch}
-              handleChange={handleChange}
-              value=""
+            <Input
+              name="search"
+              className={`${error && "border-red-600/50"}`}
+              onUncontrolledChange={handleSearchChange}
+              placeholder="Rechercher..."
+              classNameError="text-[12px] text-red-600/70"
+              type="search"
             />
           )}
 
-          <CommandGroup className="max-h-[300px] overflow-y-auto">
-            <CommandItem
-              className="text-sm mb-1"
-              value={placeholder}
-              onSelect={() => {
-                if (setFieldValue) {
-                  setFieldValue(field, "");
-                }
-                setOpen(false);
-              }}
-            >
-              {placeholder}
-            </CommandItem>
-            {data?.map((item) => (
-              <SelectItem
-                key={item.id}
-                item={item}
-                isSelected={value === item.id}
+          <CommandGroup>
+            <CommandList className="pr-4">
+              <CommandItem
+                className="text-sm mb-1 py-2"
+                value={placeholder}
                 onSelect={(currentValue) => {
-                  if (setFieldValue) {
-                    setFieldValue(
-                      field,
-                      currentValue !== placeholder ? currentValue : ""
-                    );
+                  const newValue = options?.find(
+                    (item) => item.id === currentValue
+                  );
+                  if (newValue) {
+                    handleSelectChange(newValue);
                   }
-                  setOpen(false);
                 }}
-              />
-            ))}
+              >
+                {placeholder}
+              </CommandItem>
+              {options?.map((item, index) => (
+                <CommandItem
+                  key={item.id}
+                  ref={options.length === index + 1 ? ref : null}
+                  className="flex justify-between py-2
+                  "
+                  value={item.id}
+                  onSelect={(currentValue) => {
+                    const newValue = options?.find(
+                      (item) => item.id === currentValue
+                    );
+                    if (newValue) {
+                      handleSelectChange(item);
+                    }
+                  }}
+                >
+                  <p className="truncate">
+                    {...selectionKeys.map((s) => `${item[s]} `)}
+                  </p>
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === item.id
+                        ? "opacity-100 text-green-600"
+                        : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandList>
           </CommandGroup>
         </Command>
-        <LoadingOverlay isLoading={isLoading as boolean} />
+        {isFetchingNextPage && (
+          <div className="fixed top-1 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px] ">
+            <RenderLoader className="fixed bottom-2 flex justify-center text-primary text-center right-0 w-full z-10" />
+          </div>
+        )}
       </PopoverContent>
-      <ErrorMessage isError={isError} error={error} />
+      {error && (
+        <p className={cn("text-red-600/80 mt-1 text-[12px]", classNameError)}>
+          {error}
+        </p>
+      )}
     </Popover>
   );
 };

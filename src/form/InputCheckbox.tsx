@@ -1,34 +1,12 @@
-import { CheckedState } from "@radix-ui/react-checkbox";
 import { cn } from "../shared/lib/utils";
 import { Checkbox } from "../shared/ui/checkbox";
+import { CheckboxProps } from "./types";
 
-type Props = {
-  htmlForm?: string;
-  label?: string;
-  value: boolean;
-  onChange: (checked: CheckedState) => void;
-  name: string;
-  className?: string;
-  style?: any;
-};
-
-export const InputCheckbox = ({
-  htmlForm,
-  label,
-  value,
-  onChange,
-  name,
-  className,
-  style,
-}: Props) => {
+export const InputCheckbox = (props: Omit<CheckboxProps, "type">) => {
+  const { className, htmlForm, label, ...rest } = props;
   return (
     <div className={cn("flex items-center space-x-2", className)}>
-      <Checkbox
-        checked={value}
-        onCheckedChange={onChange}
-        name={name}
-        style={style}
-      />
+      <Checkbox {...rest} />
       <label className="text-sm" htmlFor={htmlForm}>
         {label}
       </label>

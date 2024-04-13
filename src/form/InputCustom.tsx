@@ -2,37 +2,39 @@ import { Input } from "../shared/ui/input";
 import { debounce } from "@mui/material";
 import { InputProps } from "./types";
 import { cn } from "../shared/lib/utils";
+import { useState } from "react";
+import { Eye, EyeOff, Search } from "lucide-react";
 
-export const InputCustom = ({
-  type,
-  placeholder,
-  label,
-  name,
-  error,
-  handleChange,
-  isError,
-  Icon,
-  disabled = false,
-  classnameContainer,
-  classname,
-}: InputProps): JSX.Element => {
-  const debouncedHandleChange = debounce(
-    (e) => handleChange && handleChange(e.target.value),
-    500
-  );
+export const InputCustom = (props: InputProps) => {
+  const {
+    type,
+    classNameContainer,
+    label,
+    classNameError,
+    classNameIcon,
+    onChange,
+    Icon,
+    error,
+    ...rest
+  } = props;
+  const [searchValue, setSearchValue] = useState("");
+  const [showIconPassword, setShowIconPassword] = useState(false);
+
+  const debouncedHandleChange = debounce((e) => {
+    onChange?.(e.target.value);
+    if (type === "search") {
+      setSearchValue(e.target.value);
+    }
+  }, 500);
 
   return (
-    <div className={cn("mb-2", classnameContainer)}>
+    <div className={cn("mb-2", classNameContainer)}>
       {label && <label>{label}</label>}
       <div className="relative">
         <Input
-          required
-          className={classname}
-          disabled={disabled}
-          type={type}
-          name={name}
-          onChange={debouncedHandleChange}
-          placeholder={placeholder}
+          {...rest}
+          onChange={(e) => debouncedHandleChange(e)}
+          autoComplete="off"
         />
         {Icon && (
           <div
@@ -42,9 +44,39 @@ export const InputCustom = ({
             {Icon}
           </div>
         )}
+        {type === "password" && (
+          <>
+            {showIconPassword ? (
+              <EyeOff
+                className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
+                style={{ top: "50%", transform: "translateY(-50%)" }}
+                size={16}
+                onClick={() => {
+                  setShowIconPassword(false);
+                }}
+              />
+            ) : (
+              <Eye
+                className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
+                style={{ top: "50%", transform: "translateY(-50%)" }}
+                size={16}
+                onClick={() => {
+                  setShowIconPassword(true);
+                }}
+              />
+            )}
+          </>
+        )}
+        {searchValue === "" && type === "search" && (
+          <Search
+            size={13}
+            className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
+            style={{ top: "50%", transform: "translateY(-50%)" }}
+          />
+        )}
       </div>
-      {isError && (
-        <p className="text-red-600/80 mt-1 text-[14px]">{error as string}</p>
+      {error && (
+        <p className={cn("text-red-600 mt-1", classNameError)}>{error}</p>
       )}
     </div>
   );

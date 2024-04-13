@@ -55,7 +55,7 @@ const useCustomInfiniteQuery = <T>({
 
   const flattenedData = data?.pages.flatMap((page) =>
     page.map((item: T) => item)
-  );
+  ) as T[];
 
   return {
     fetchNextPage,
