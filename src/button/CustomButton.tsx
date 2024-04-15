@@ -1,23 +1,12 @@
 import { Button } from "@/shared/ui/button";
-import { type ButtonProps as Props } from "./types";
-import { ReactElement } from "react";
+import { ButtonProps } from "./types";
 import { cn } from "../shared/lib/utils";
 
-type ButtonProps =
-  | ({
-      icon: ReactElement;
-      iconPosition: "right" | "left";
-    } & Props)
-  | ({
-      icon?: ReactElement;
-      iconPosition?: never;
-    } & Props);
-
 const CustomButton = ({
-  icon,
-  iconPosition,
+  icon = undefined,
+  iconPosition = "right",
   ...props
-}: ButtonProps): JSX.Element => {
+}: ButtonProps<true> | ButtonProps<false>): JSX.Element => {
   return (
     <Button
       {...props}
@@ -25,8 +14,13 @@ const CustomButton = ({
         "flex flex-row-reverse": iconPosition === "left" && icon,
       })}
     >
-      <span className="flex-1">{props.children}</span>
+      {iconPosition === "right" && (
+        <span className="flex-1">{props.children}</span>
+      )}
       {icon ?? null}
+      {iconPosition === "left" && (
+        <span className="flex-1">{props.children}</span>
+      )}
     </Button>
   );
 };

@@ -16,10 +16,15 @@ const CustomCard = ({
   footer,
   className,
   img,
+  width = 300,
   ...props
 }: CustomCardProps) => {
   return (
-    <Card className={cn("w-[350px] border-border", className)} {...props}>
+    <Card
+      className={cn("border-border", className)}
+      {...props}
+      style={{ width }}
+    >
       {img ?? null}
       <CardHeader>
         <CardTitle>{title}</CardTitle>

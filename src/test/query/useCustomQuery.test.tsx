@@ -5,9 +5,9 @@ import {
   QueryKey,
 } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it } from "vitest";
-import useCustomQuery from "../../query/useCustomQuery";
 import { waitFor } from "@testing-library/react";
 import { mockPosts, posts } from "./mocks";
+import { useQuery } from "../../query";
 
 describe("useCustomQuery", () => {
   const queryKey: QueryKey = ["posts"];
@@ -24,7 +24,7 @@ describe("useCustomQuery", () => {
   });
 
   const renderCustomQueryHook = (options: any) => {
-    const { result, waitFor } = renderHook(() => useCustomQuery(options), {
+    const { result, waitFor } = renderHook(() => useQuery(options), {
       wrapper,
     });
     return { result, waitFor };

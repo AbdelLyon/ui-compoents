@@ -5,8 +5,8 @@ import {
   QueryKey,
 } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it } from "vitest";
-import useCustomInfiniteQuery from "../../query/UseCustomInfiniteQuery";
 import { mockPostsPaginate, posts } from "./mocks";
+import { useInfiniteQuery } from "../../query";
 
 describe("useCustomInfiniteQuery", () => {
   const queryKey: QueryKey = ["posts"];
@@ -21,12 +21,9 @@ describe("useCustomInfiniteQuery", () => {
   });
 
   const renderCustomQueryHook = (options: any) => {
-    const { result, waitFor } = renderHook(
-      () => useCustomInfiniteQuery(options),
-      {
-        wrapper,
-      }
-    );
+    const { result, waitFor } = renderHook(() => useInfiniteQuery(options), {
+      wrapper,
+    });
     return { result, waitFor };
   };
 

@@ -2,37 +2,66 @@ import { Input } from "../shared/ui/input";
 import { debounce } from "@mui/material";
 import { InputProps } from "./types";
 import { cn } from "../shared/lib/utils";
+import {
+  HTMLAttributes,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+  memo,
+} from "react";
+import { Eye, EyeOff, Search } from "lucide-react";
 
-export const InputCustom = ({
-  type,
-  placeholder,
+const InputCustom = ({
+  type = "text",
+  classNameContainer,
   label,
-  name,
-  error,
-  handleChange,
-  isError,
+  classNameError,
+  classNameIcon,
+  handelChange,
   Icon,
-  disabled = false,
-  classnameContainer,
-  classname,
-}: InputProps): JSX.Element => {
-  const debouncedHandleChange = debounce(
-    (e) => handleChange && handleChange(e.target.value),
-    500
+  error,
+  value,
+  placeholder,
+  className,
+  classNameLabel,
+  width = "100%",
+}: InputProps & HTMLAttributes<HTMLInputElement>) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const ref = useRef<HTMLInputElement | null>(null);
+
+  const debouncedHandleChange = useCallback(
+    debounce((e) => {
+      handelChange?.(e.target.value);
+      if (type === "search") {
+        setSearchValue(e.target.value);
+      }
+    }, 500),
+    [type, handelChange]
   );
 
+  useEffect(() => {
+    if (ref.current && value !== undefined) {
+      ref.current.value = value;
+    }
+  }, [value]);
+
   return (
-    <div className={cn("mb-2", classnameContainer)}>
-      {label && <label>{label}</label>}
-      <div className="relative">
+    <div className="mb-3">
+      {label && (
+        <label className={cn("text-sm", classNameLabel)}>{label}</label>
+      )}
+      <div
+        className={cn("relative mt-1", classNameContainer)}
+        style={{ width }}
+      >
         <Input
-          required
-          className={classname}
-          disabled={disabled}
-          type={type}
-          name={name}
-          onChange={debouncedHandleChange}
+          onChange={(e) => debouncedHandleChange(e)}
+          type={isPasswordVisible ? "text" : type}
+          ref={ref}
           placeholder={placeholder}
+          className={cn("text-sm", className)}
         />
         {Icon && (
           <div
@@ -42,10 +71,42 @@ export const InputCustom = ({
             {Icon}
           </div>
         )}
+        {type === "password" && (
+          <>
+            {isPasswordVisible ? (
+              <EyeOff
+                className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
+                style={{ top: "50%", transform: "translateY(-50%)" }}
+                size={16}
+                onClick={() => {
+                  setIsPasswordVisible(false);
+                }}
+              />
+            ) : (
+              <Eye
+                className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
+                style={{ top: "50%", transform: "translateY(-50%)" }}
+                size={16}
+                onClick={() => {
+                  setIsPasswordVisible(true);
+                }}
+              />
+            )}
+          </>
+        )}
+        {searchValue === "" && type === "search" && (
+          <Search
+            size={13}
+            className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
+            style={{ top: "50%", transform: "translateY(-50%)" }}
+          />
+        )}
       </div>
-      {isError && (
-        <p className="text-red-600/80 mt-1 text-[14px]">{error as string}</p>
+      {error && (
+        <p className={cn("text-red-600 mt-1 ", classNameError)}>{error}</p>
       )}
     </div>
   );
 };
+
+export default memo(InputCustom);
