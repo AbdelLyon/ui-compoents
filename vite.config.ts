@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import dts from "vite-plugin-dts";
+
 import path from "path";
 
 // Configuration de Vite : https://vitejs.dev/config/

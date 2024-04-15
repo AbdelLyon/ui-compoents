@@ -3,7 +3,7 @@ import { Card } from "../shared/ui/card";
 
 export type CustomCardProps = ComponentProps<typeof Card> & {
   className?: string;
-  width?: number;
+  width?: number | string;
   img?: ReactNode;
   title: string;
   description?: string;

@@ -13,7 +13,7 @@ import {
 import { Eye, EyeOff, Search } from "lucide-react";
 
 const InputCustom = ({
-  type,
+  type = "text",
   classNameContainer,
   label,
   classNameError,
@@ -24,6 +24,8 @@ const InputCustom = ({
   value,
   placeholder,
   className,
+  classNameLabel,
+  width = "100%",
 }: InputProps & HTMLAttributes<HTMLInputElement>) => {
   const [searchValue, setSearchValue] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -46,15 +48,20 @@ const InputCustom = ({
   }, [value]);
 
   return (
-    <div className={cn("mb-3", classNameContainer)}>
-      {label && <label>{label}</label>}
-      <div className="relative">
+    <div className="mb-3">
+      {label && (
+        <label className={cn("text-sm", classNameLabel)}>{label}</label>
+      )}
+      <div
+        className={cn("relative mt-1", classNameContainer)}
+        style={{ width }}
+      >
         <Input
           onChange={(e) => debouncedHandleChange(e)}
           type={isPasswordVisible ? "text" : type}
           ref={ref}
           placeholder={placeholder}
-          className={className}
+          className={cn("text-sm", className)}
         />
         {Icon && (
           <div
@@ -96,7 +103,7 @@ const InputCustom = ({
         )}
       </div>
       {error && (
-        <p className={cn("text-red-600 mt-1", classNameError)}>{error}</p>
+        <p className={cn("text-red-600 mt-1 ", classNameError)}>{error}</p>
       )}
     </div>
   );

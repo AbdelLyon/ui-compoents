@@ -3,8 +3,8 @@ import { ButtonProps } from "./types";
 import { cn } from "../shared/lib/utils";
 
 const CustomButton = ({
-  icon,
-  iconPosition,
+  icon = undefined,
+  iconPosition = "right",
   ...props
 }: ButtonProps<true> | ButtonProps<false>): JSX.Element => {
   return (
@@ -14,8 +14,13 @@ const CustomButton = ({
         "flex flex-row-reverse": iconPosition === "left" && icon,
       })}
     >
-      <span className="flex-1">{props.children}</span>
+      {iconPosition === "right" && (
+        <span className="flex-1">{props.children}</span>
+      )}
       {icon ?? null}
+      {iconPosition === "left" && (
+        <span className="flex-1">{props.children}</span>
+      )}
     </Button>
   );
 };

@@ -4,7 +4,7 @@ import { Query } from "./types";
 const useInfiniteQuery = <Data, Request>({
   queryKey,
   request,
-  search,
+  search = {},
   enabled = true,
 }: Query<Data, Request>) => {
   const {
@@ -21,7 +21,13 @@ const useInfiniteQuery = <Data, Request>({
     queryFn: ({ pageParam }) =>
       request({ search: { ...search, page: pageParam } }),
     initialPageParam: 1,
-    getNextPageParam: (_, allPages) => allPages.length + 1,
+    getNextPageParam: (lastPage, pages, limit = 10) => {
+      const nextPage = pages.length * limit + 1;
+
+      if (lastPage.length < limit) return undefined;
+
+      return nextPage;
+    },
     enabled,
   });
 

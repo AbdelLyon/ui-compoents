@@ -1,18 +1,16 @@
-import { ReactElement } from "react";
-import { FormikErrors } from "formik";
-import { PopoverProps } from "@radix-ui/react-popover";
+import { Dispatch, ReactElement } from "react";
 
-// Type commun à tous les éléments d'entrée
 export interface CommonInputProps {
   label?: string;
-  error?: string | FormikErrors<string>;
+  error?: string;
   name?: string;
   className?: string;
   classNameError?: string;
   value?: string;
+  width?: string | number;
+  placeholder?: string;
 }
 
-// Type commun aux éléments d'entrée de type 'input'
 export interface InputProps extends CommonInputProps {
   type?:
     | "text"
@@ -22,37 +20,34 @@ export interface InputProps extends CommonInputProps {
     | "email"
     | "password"
     | "search";
-  placeholder?: string;
   handelChange?: (value: string) => void;
   Icon?: ReactElement;
   classNameContainer?: string;
   classNameIcon?: string;
   onOpenChange?: (open: boolean) => void;
-
   autoComplete?: string;
+  classNameLabel?: string;
 }
 
-// Type pour les cases à cocher
 export interface CheckboxProps extends CommonInputProps {
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
   htmlForm?: string;
 }
 
-// Type pour les sélecteurs avec fonction de recherche
-export interface SelectSearchProps<T> extends PopoverProps, CommonInputProps {
-  options: T[];
-  selectionKeys: string[];
-  onSelectChange: (value: T) => void;
+export interface SelectProps extends CommonInputProps {
+  onSelectChange: (value: ExtendedProps) => void;
+  setOpen?: Dispatch<React.SetStateAction<boolean>>;
+  observerRef?: (node?: Element | null) => void;
+  isSearchable?: boolean;
+  options: ExtendedProps[];
   onSearchChange?: (value: string) => void;
+  selectionKeys: (keyof ExtendedProps)[];
   fetchNextPage?: () => void;
   placeholderSearch?: string;
-  placeholder?: string;
-  value: string;
-  isSearchable?: boolean;
   isFetchingNextPage?: boolean;
-  isFetching?: boolean;
-  width?: number;
 }
 
-export type ExtendedProps = { id: string; [key: string]: string };
+export type ExtendedProps = {
+  [key: string]: string;
+};
