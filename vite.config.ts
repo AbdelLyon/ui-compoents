@@ -1,12 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import dts from "vite-plugin-dts";
-
 import path from "path";
 
-// Configuration de Vite : https://vitejs.dev/config/
 export default defineConfig({
-  // Utilisation des plugins React et dts pour générer les fichiers de déclaration de type fichiers .d.ts
   plugins: [react(), dts({ insertTypesEntry: true })],
   resolve: {
     // Alias pour le répertoire src
@@ -31,6 +28,8 @@ export default defineConfig({
       formats: ["es", "cjs"],
       fileName: (format, entryName) =>
         // Nom des fichiers de sortie
+        // Par exemple, si format est "es" et entryName est "example", le nom de fichier de sortie sera "providers/ui-xefi.es.js".
+        // Si entryName est vide, alors le nom de fichier sera "ui-xefi.es.js".
         `${entryName ? entryName + "/" : ""}ui-xefi.${format}.js`,
     },
     rollupOptions: {

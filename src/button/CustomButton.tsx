@@ -5,22 +5,25 @@ import { cn } from "../shared/lib/utils";
 const CustomButton = ({
   icon = undefined,
   iconPosition = "right",
+  className,
+  children,
   ...props
-}: ButtonProps<true> | ButtonProps<false>): JSX.Element => {
+}: ButtonProps<true> | ButtonProps<false>) => {
   return (
     <Button
       {...props}
-      className={cn(props.className, {
+      className={cn(className, {
         "flex flex-row-reverse": iconPosition === "left" && icon,
       })}
     >
-      {iconPosition === "right" && (
-        <span className="flex-1">{props.children}</span>
-      )}
-      {icon ?? null}
-      {iconPosition === "left" && (
-        <span className="flex-1">{props.children}</span>
-      )}
+      <span
+        className={cn({
+          "flex-1": iconPosition === "left" || iconPosition === "right",
+        })}
+      >
+        {children}
+      </span>
+      {icon}
     </Button>
   );
 };

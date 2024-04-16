@@ -62,6 +62,7 @@ const InputCustom = ({
           ref={ref}
           placeholder={placeholder}
           className={cn("text-sm", className)}
+          id="input"
         />
         {Icon && (
           <div
@@ -75,6 +76,7 @@ const InputCustom = ({
           <>
             {isPasswordVisible ? (
               <EyeOff
+                id="eye-icon"
                 className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
                 style={{ top: "50%", transform: "translateY(-50%)" }}
                 size={16}

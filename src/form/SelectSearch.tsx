@@ -33,56 +33,58 @@ const SelectSearch = ({
   }, [inView, fetchNextPage]);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      {label && (
-        <label style={{ width }} className="text-start">
-          {label}
-        </label>
-      )}
-      <Trigger
-        options={options}
-        selectionKeys={selectionKeys}
-        value={value}
-        className={className}
-        placeholder={placeholder}
-        width={width}
-      />
-      <PopoverContent className={cn("mt-1 p-3")} style={{ width }}>
-        {isSearchable && (
-          <SearchOption
-            error={error}
-            onSearchChange={onSearchChange}
-            placeholderSearch={placeholderSearch}
-          />
+    <div data-testid="select-element">
+      <Popover open={open} onOpenChange={setOpen}>
+        {label && (
+          <label style={{ width }} className="text-start">
+            {label}
+          </label>
         )}
-
-        <Select
-          onSelectChange={onSelectChange}
+        <Trigger
           options={options}
-          observerRef={ref}
           selectionKeys={selectionKeys}
-          setOpen={setOpen}
           value={value}
+          className={className}
           placeholder={placeholder}
+          width={width}
         />
-        {isFetchingNextPage && (
-          <div className="fixed top-1 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px]">
-            <RenderLoader className="fixed bottom-2 flex justify-center text-primary text-center right-0 w-full z-10" />
-          </div>
-        )}
-      </PopoverContent>
-      {error && (
-        <p
-          className={cn(
-            "text-red-600/80 mt-1 text-[12px] text-start",
-            classNameError
+        <PopoverContent className={cn("mt-1 p-3")} style={{ width }}>
+          {isSearchable && (
+            <SearchOption
+              error={error}
+              onSearchChange={onSearchChange}
+              placeholderSearch={placeholderSearch}
+            />
           )}
-          style={{ width }}
-        >
-          {error}
-        </p>
-      )}
-    </Popover>
+
+          <Select
+            onSelectChange={onSelectChange}
+            options={options}
+            observerRef={ref}
+            selectionKeys={selectionKeys}
+            setOpen={setOpen}
+            value={value}
+            placeholder={placeholder}
+          />
+          {isFetchingNextPage && (
+            <div className="fixed top-1 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px]">
+              <RenderLoader className="fixed bottom-2 flex justify-center text-primary text-center right-0 w-full z-10" />
+            </div>
+          )}
+        </PopoverContent>
+        {error && (
+          <p
+            className={cn(
+              "text-red-600/80 mt-1 text-[12px] text-start",
+              classNameError
+            )}
+            style={{ width }}
+          >
+            {error}
+          </p>
+        )}
+      </Popover>
+    </div>
   );
 };
 

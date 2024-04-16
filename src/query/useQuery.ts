@@ -4,8 +4,8 @@ import { Query } from "./types";
 const useQuery = <Data, Request>({
   queryKey,
   request,
-  search = {},
-  enabled = true,
+  search,
+  enabled,
 }: Query<Data, Request>) => {
   const { data, isLoading, isFetching, isSuccess, refetch } = useReactQuery({
     queryKey,
