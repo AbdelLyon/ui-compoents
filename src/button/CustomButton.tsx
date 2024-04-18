@@ -1,32 +1,29 @@
 import { Button } from "@/shared/ui/button";
-import { type ButtonProps as Props } from "./types";
-import { ReactElement } from "react";
+import { ButtonProps } from "./types";
 import { cn } from "../shared/lib/utils";
 
-type ButtonProps =
-  | ({
-      icon: ReactElement;
-      iconPosition: "right" | "left";
-    } & Props)
-  | ({
-      icon?: ReactElement;
-      iconPosition?: never;
-    } & Props);
-
 const CustomButton = ({
-  icon,
-  iconPosition,
+  icon = undefined,
+  iconPosition = "right",
+  className,
+  children,
   ...props
-}: ButtonProps): JSX.Element => {
+}: ButtonProps<true> | ButtonProps<false>) => {
   return (
     <Button
       {...props}
-      className={cn(props.className, {
+      className={cn(className, {
         "flex flex-row-reverse": iconPosition === "left" && icon,
       })}
     >
-      <span className="flex-1">{props.children}</span>
-      {icon ?? null}
+      <span
+        className={cn({
+          "flex-1": iconPosition === "left" || iconPosition === "right",
+        })}
+      >
+        {children}
+      </span>
+      {icon}
     </Button>
   );
 };

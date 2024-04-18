@@ -1,9 +1,13 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { QueryKey } from "@tanstack/react-query";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import useCustomQuery from "../query/useQuery"; // Import du hook à tester
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryKey,
+} from "@tanstack/react-query";
+import { beforeEach, describe, expect, it } from "vitest";
 import { waitFor } from "@testing-library/react";
+import { mockPosts, posts } from "./mocks";
+import { useQuery } from "../../query";
 
 describe("useCustomQuery", () => {
   const queryKey: QueryKey = ["posts"];
@@ -19,67 +23,65 @@ describe("useCustomQuery", () => {
     );
   });
 
-  // Fonction de requête fictive pour simuler une requête asynchrone
-  const mockRequest = vi.fn(async () => {
-    return await [
-      { id: 1, title: "Post 1" },
-      { id: 2, title: "Post 2" },
-      { id: 3, title: "Post 3" },
-      { id: 4, title: "Post 4" },
-    ];
-  });
-
-  // Fonction pour rendre le hook personnalisé avec des options spécifiques
   const renderCustomQueryHook = (options: any) => {
-    const { result, waitFor } = renderHook(() => useCustomQuery(options), {
+    const { result, waitFor } = renderHook(() => useQuery(options), {
       wrapper,
     });
     return { result, waitFor };
   };
 
-  // Test pour vérifier le comportement lorsque aucun paramètre de recherche n'est passé
   it("should call useQuery with expected params when no search params passed", async () => {
     const { result, waitFor } = renderCustomQueryHook({
       queryKey,
-      request: mockRequest,
+      request: mockPosts,
       search: {},
     });
 
-    // Attente que le chargement soit en cours
     await waitFor(() => expect(result.current.isLoading).toBe(true));
     await waitFor(() => expect(result.current.isFetching).toBe(true));
     await waitFor(() => expect(result.current.isSuccess).toBe(false));
 
-    // Vérification des données
     expect(result.current.data).toBeUndefined();
 
     await waitFor(() => result.current.isLoading === false);
     await waitFor(() => expect(result.current.isFetching).toBe(false));
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
-    expect(mockRequest).toHaveBeenCalledWith({ search: {} });
+    expect(mockPosts).toHaveBeenCalledWith({ search: {} });
 
-    expect(result.current.data).toEqual([
-      { id: 1, title: "Post 1" },
-      { id: 2, title: "Post 2" },
-      { id: 3, title: "Post 3" },
-      { id: 4, title: "Post 4" },
-    ]);
+    expect(result.current.data).toEqual(posts);
   });
 
-  // Fonction pour tester un paramètre de recherche spécifique
+  it("should enable query based on enabled param", async () => {
+    const { result } = renderCustomQueryHook({
+      queryKey,
+      request: mockPosts,
+      search: {},
+      enabled: false,
+    });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.data).toBeUndefined();
+
+    act(() => {
+      result.current.refetch();
+    });
+
+    await waitFor(() => result.current.isLoading === false);
+    expect(result.current.data).toEqual(posts);
+  });
+
   const testSearchParam = (paramName: string, paramValue: any) => {
     it(`should call useQuery with ${paramName} if passed`, async () => {
       const searchParams = { [paramName]: paramValue };
       const { result, waitFor } = renderCustomQueryHook({
         queryKey,
-        request: mockRequest,
+        request: mockPosts,
         search: searchParams,
       });
 
       await waitFor(() => result.current.isLoading === false);
-
-      expect(mockRequest).toHaveBeenCalledWith({ search: searchParams });
+      expect(mockPosts).toHaveBeenCalledWith({ search: searchParams });
     });
   };
 
@@ -97,34 +99,16 @@ describe("useCustomQuery", () => {
   ]);
   testSearchParam("scopes", [{ name: "scope1", parameters: ["param1"] }]);
   testSearchParam("sorts", [{ field: "title", direction: "asc" }]);
+  // Aggregates
+  testSearchParam("aggregates", [
+    {
+      relation: "someRelation",
+      type: "someType",
+      field: "someField",
+      filters: [{ field: "field1", value: "value1" }],
+    },
+  ]);
 
-  // Test pour vérifier que le hook fonctionne correctement lorsque enabled est false
-  it("should enable query based on enabled param", async () => {
-    const { result } = renderCustomQueryHook({
-      queryKey,
-      request: mockRequest,
-      search: {},
-      enabled: false,
-    });
-
-    // Vérification que le chargement est toujours en cours et aucune donnée n'est retournée
-    expect(result.current.isLoading).toBe(false);
-    expect(result.current.data).toBeUndefined();
-
-    // Forcer le rechargement
-    act(() => {
-      result.current.refetch();
-    });
-
-    // Attente que le chargement soit terminé
-    await waitFor(() => result.current.isLoading === false);
-
-    // Vérification que les données sont retournées correctement
-    expect(result.current.data).toEqual([
-      { id: 1, title: "Post 1" },
-      { id: 2, title: "Post 2" },
-      { id: 3, title: "Post 3" },
-      { id: 4, title: "Post 4" },
-    ]);
-  });
+  // Gates
+  testSearchParam("gates", ["create", "view"]);
 });
