@@ -1,37 +1,23 @@
-import { QueryKey, useQuery } from "@tanstack/react-query";
-import { Search } from "./queryTypes";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
+import { Query } from "./types";
 
-export type UseCustomQuery<T> = {
-  queryKey: QueryKey;
-  request: ({}) => Promise<T[]>;
-  search: Partial<Search>;
-  enabled?: boolean;
-};
-
-const useCustomQuery = <T>({
+const useQuery = <Data, Request>({
   queryKey,
   request,
-  search: { includes, filters, sorts, instructions, scopes, gates },
+  search,
   enabled,
-}: UseCustomQuery<T>) => {
-  const { data, isLoading, isFetching, isSuccess, refetch } = useQuery({
+}: Query<Data, Request>) => {
+  const { data, isLoading, isFetching, isSuccess, refetch } = useReactQuery({
     queryKey,
     queryFn: () =>
       request({
-        search: {
-          ...(includes && includes.length > 0 && { includes }),
-          ...(filters && filters.length > 0 && { filters }),
-          ...(sorts && sorts.length > 0 && { sorts }),
-          ...(instructions && instructions.length > 0 && { instructions }),
-          ...(scopes && scopes.length > 0 && { scopes }),
-          ...(gates && gates.length > 0 && { scopes }),
-        },
+        search,
       }),
     enabled,
   });
 
   return {
-    data: data,
+    data,
     isLoading,
     isFetching,
     isSuccess,
@@ -39,4 +25,4 @@ const useCustomQuery = <T>({
   };
 };
 
-export default useCustomQuery;
+export default useQuery;
