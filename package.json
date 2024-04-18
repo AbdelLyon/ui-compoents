@@ -13,6 +13,11 @@
       "require": "./dist/providers/ui-xefi.cjs.js",
       "types": "./dist/providers/index.d.ts"
     },
+    "./grid": {
+      "import": "./dist/grid/ui-xefi.es.js",
+      "require": "./dist/grid/ui-xefi.cjs.js",
+      "types": "./dist/grid/index.d.ts"
+    },
     "./theme": {
       "import": "./dist/theme/ui-xefi.es.js",
       "require": "./dist/theme/ui-xefi.cjs.js",
@@ -58,6 +63,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.14",
+    "@mui/x-data-grid-pro": "^7.3.0",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.0.4",

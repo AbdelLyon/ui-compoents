@@ -18,6 +18,7 @@ export default defineConfig({
         providers: path.resolve(__dirname, "src/providers"),
         theme: path.resolve(__dirname, "src/theme"),
         button: path.resolve(__dirname, "src/button"),
+        grid: path.resolve(__dirname, "src/grid"),
         card: path.resolve(__dirname, "src/card"),
         query: path.resolve(__dirname, "src/query"),
         form: path.resolve(__dirname, "src/form"),
