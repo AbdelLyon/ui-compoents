@@ -10,8 +10,9 @@ const modules = [
   "button",
   "grid",
   "card",
-  "query",
+  "hooks",
   "form",
+  "icons",
   "index",
 ];
 

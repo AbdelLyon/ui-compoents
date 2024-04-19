@@ -10,7 +10,8 @@ import {
   useEffect,
   memo,
 } from "react";
-import { Eye, EyeOff, Search } from "lucide-react";
+import { MailIcon, PassowrIcon, SearchIcon } from "./fragments/Input";
+import { Label } from "../shared/ui/label";
 
 const InputCustom = ({
   type = "text",
@@ -28,8 +29,8 @@ const InputCustom = ({
   width = "100%",
 }: InputProps & HTMLAttributes<HTMLInputElement>) => {
   const [searchValue, setSearchValue] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const ref = useRef<HTMLInputElement | null>(null);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const debouncedHandleChange = useCallback(
     debounce((e) => {
@@ -49,9 +50,7 @@ const InputCustom = ({
 
   return (
     <div className="mb-3">
-      {label && (
-        <label className={cn("text-sm", classNameLabel)}>{label}</label>
-      )}
+      {label && <Label className={classNameLabel}>{label}</Label>}
       <div
         className={cn("relative mt-1", classNameContainer)}
         style={{ width }}
@@ -73,36 +72,16 @@ const InputCustom = ({
           </div>
         )}
         {type === "password" && (
-          <>
-            {isPasswordVisible ? (
-              <EyeOff
-                id="eye-icon"
-                className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
-                style={{ top: "50%", transform: "translateY(-50%)" }}
-                size={16}
-                onClick={() => {
-                  setIsPasswordVisible(false);
-                }}
-              />
-            ) : (
-              <Eye
-                className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
-                style={{ top: "50%", transform: "translateY(-50%)" }}
-                size={16}
-                onClick={() => {
-                  setIsPasswordVisible(true);
-                }}
-              />
-            )}
-          </>
-        )}
-        {searchValue === "" && type === "search" && (
-          <Search
-            size={13}
-            className={`text-muted-foreground right-3 ${classNameIcon} absolute`}
-            style={{ top: "50%", transform: "translateY(-50%)" }}
+          <PassowrIcon
+            className={classNameIcon}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
           />
         )}
+        {type === "search" && searchValue === "" && (
+          <SearchIcon className={classNameIcon} />
+        )}
+        {type === "email" && <MailIcon className={classNameIcon} />}
       </div>
       {error && (
         <p className={cn("text-red-600 mt-1 ", classNameError)}>{error}</p>
