@@ -7,7 +7,7 @@ import { Popover, PopoverContent } from "@/shared/ui/popover";
 import { SearchOption, Select, Trigger } from "./fragments/Select";
 import { Label } from "../shared/ui/label";
 
-const SelectSearch = <Data,>({
+const SelectSearch = ({
   onSelectChange,
   options = [],
   label,
