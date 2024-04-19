@@ -2,11 +2,12 @@ import { useEffect, memo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { cn } from "../shared/lib/utils";
 import { RenderLoader } from "../shared/ui/LoadingIndicator";
-import { SelectProps } from "./types";
+import { ExtendedProps, SelectProps } from "./types";
 import { Popover, PopoverContent } from "@/shared/ui/popover";
 import { SearchOption, Select, Trigger } from "./fragments/Select";
+import { Label } from "../shared/ui/label";
 
-const SelectSearch = ({
+const SelectSearch = <Data,>({
   onSelectChange,
   options = [],
   label,
@@ -22,9 +23,14 @@ const SelectSearch = ({
   selectionKeys = [],
   className,
   classNameError,
-}: SelectProps) => {
+}: SelectProps<ExtendedProps>) => {
   const { ref, inView } = useInView();
   const [open, setOpen] = useState(false);
+
+  const datas = options.map((item) => ({
+    ...item,
+    id: item.id?.toString(),
+  }));
 
   useEffect(() => {
     if (inView && fetchNextPage) {
@@ -36,19 +42,19 @@ const SelectSearch = ({
     <div data-testid="select-element">
       <Popover open={open} onOpenChange={setOpen}>
         {label && (
-          <label style={{ width }} className="text-start">
+          <Label style={{ width }} className="text-start">
             {label}
-          </label>
+          </Label>
         )}
         <Trigger
-          options={options}
+          options={datas}
           selectionKeys={selectionKeys}
           value={value}
           className={className}
           placeholder={placeholder}
           width={width}
         />
-        <PopoverContent className={cn("mt-1 p-3")} style={{ width }}>
+        <PopoverContent className={cn("mt-1 p-3 w-full")} style={{ width }}>
           {isSearchable && (
             <SearchOption
               error={error}
@@ -59,12 +65,13 @@ const SelectSearch = ({
 
           <Select
             onSelectChange={onSelectChange}
-            options={options}
+            options={datas}
             observerRef={ref}
             selectionKeys={selectionKeys}
             setOpen={setOpen}
             value={value}
             placeholder={placeholder}
+            width={width}
           />
           {isFetchingNextPage && (
             <div className="fixed top-1 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px]">

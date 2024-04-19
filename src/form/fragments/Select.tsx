@@ -1,5 +1,5 @@
 import { memo, useCallback } from "react";
-import { SelectProps } from "../types";
+import { ExtendedProps, SelectProps } from "../types";
 import { Command, CommandItem, CommandList } from "../../shared/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "../../shared/lib/utils";
@@ -13,22 +13,25 @@ const Trigger = ({
   selectionKeys = [],
   placeholder,
   options = [],
-}: Partial<SelectProps>) => {
+}: Partial<SelectProps<ExtendedProps>>) => {
   const valueSelected = options?.find((item) => item?.id === value) ?? {};
 
   return (
     <PopoverTrigger asChild>
       <div
         className={cn(
-          "w-[400px] flex justify-between items-center px-3 h-11 border border-border text-text bg-transparent rounded-md cursor-pointer",
-          { "text-muted-foreground": value === "" },
+          "w-[400px] flex justify-between items-center px-3 h-11 border border-border bg-transparent rounded-md cursor-pointer",
           className
         )}
         style={{
           width,
         }}
       >
-        <p className="truncate text-sm">
+        <p
+          className={cn("truncate text-[13px] ", {
+            "text-muted-foreground opacity-50": !value,
+          })}
+        >
           {value
             ? selectionKeys?.map((s) => `${valueSelected?.[s]} `)
             : placeholder}
@@ -44,7 +47,7 @@ const SearchOption = memo(
     error = "",
     onSearchChange,
     placeholderSearch = "",
-  }: Partial<SelectProps>) => {
+  }: Partial<SelectProps<any>>) => {
     const handleSearchChange = useCallback(
       (value: string) => onSearchChange?.(value),
       [onSearchChange]
@@ -72,12 +75,16 @@ const Select = memo(
     setOpen,
     selectionKeys = [],
     observerRef,
-  }: SelectProps) => {
+  }: SelectProps<ExtendedProps>) => {
     const handleSelectChange = useCallback(
       (currentValue: string) => {
-        const newValue = options?.find((item) => item?.id === currentValue);
+        const newValue = options?.find((item) => {
+          return item?.id === currentValue;
+        });
         if (newValue && newValue.id !== value) {
           onSelectChange(newValue);
+        } else {
+          onSelectChange({ id: "" });
         }
         setOpen?.(false);
       },

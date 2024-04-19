@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it } from "vitest";
 import { mockPostsPaginate, posts } from "./mocks";
-import { useInfiniteQuery } from "../../query";
+import { useInfiniteQuery } from "../../hooks";
 
 describe("useCustomInfiniteQuery", () => {
   const queryKey: QueryKey = ["posts"];
@@ -38,7 +38,7 @@ describe("useCustomInfiniteQuery", () => {
     await waitFor(() => expect(result.current.isFetching).toBe(true));
     await waitFor(() => expect(result.current.isSuccess).toBe(false));
 
-    expect(result.current.data).toBeUndefined();
+    expect(result.current.data).toHaveLength(0);
 
     await waitFor(() => result.current.isLoading === false);
     await waitFor(() => expect(result.current.isFetching).toBe(false));
@@ -60,7 +60,7 @@ describe("useCustomInfiniteQuery", () => {
     await waitFor(() => expect(result.current.isFetching).toBe(true));
     await waitFor(() => expect(result.current.isSuccess).toBe(false));
 
-    expect(result.current.data).toBeUndefined();
+    expect(result.current.data).toHaveLength(0);
 
     await waitFor(() => result.current.isLoading === false);
     await waitFor(() => expect(result.current.isFetching).toBe(false));

@@ -33,10 +33,15 @@
       "require": "./dist/card/ui-xefi.cjs.js",
       "types": "./dist/card/index.d.ts"
     },
-    "./query": {
-      "import": "./dist/query/ui-xefi.es.js",
-      "require": "./dist/query/ui-xefi.cjs.js",
-      "types": "./dist/query/index.d.ts"
+    "./icons": {
+      "import": "./dist/icons/ui-xefi.es.js",
+      "require": "./dist/icons/ui-xefi.cjs.js",
+      "types": "./dist/icons/index.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/ui-xefi.es.js",
+      "require": "./dist/hooks/ui-xefi.cjs.js",
+      "types": "./dist/hooks/index.d.ts"
     },
     "./form": {
       "import": "./dist/form/ui-xefi.es.js",

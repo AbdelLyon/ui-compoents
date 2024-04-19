@@ -7,7 +7,7 @@ import {
 import { beforeEach, describe, expect, it } from "vitest";
 import { waitFor } from "@testing-library/react";
 import { mockPosts, posts } from "./mocks";
-import { useQuery } from "../../query";
+import { useQuery } from "../../hooks";
 
 describe("useCustomQuery", () => {
   const queryKey: QueryKey = ["posts"];

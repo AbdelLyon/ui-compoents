@@ -35,14 +35,14 @@ export interface CheckboxProps extends CommonInputProps {
   htmlForm?: string;
 }
 
-export interface SelectProps extends CommonInputProps {
-  onSelectChange: (value: ExtendedProps) => void;
+export interface SelectProps<Data> extends CommonInputProps {
+  onSelectChange: (value: Data) => void;
   setOpen?: Dispatch<React.SetStateAction<boolean>>;
   observerRef?: (node?: Element | null) => void;
   isSearchable?: boolean;
-  options: ExtendedProps[];
+  options: Data[];
   onSearchChange?: (value: string) => void;
-  selectionKeys: (keyof ExtendedProps)[];
+  selectionKeys: (keyof Data)[];
   fetchNextPage?: () => void;
   placeholderSearch?: string;
   isFetchingNextPage?: boolean;
