@@ -1,2 +1,8 @@
 import "@/index.css";
-export { default as Card } from "@/card/CustomCard";
+export {
+  CardImage,
+  CustomCardTitle as CardTitle,
+  CustomCardContent as CardContent,
+  CustomCardFooter as CardFooter,
+  CustomCard as Card,
+} from "@/card/CustomCard";
