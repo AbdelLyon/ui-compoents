@@ -32,16 +32,17 @@ describe("SelectSearch", () => {
         value=""
       />
     );
+
     const select = screen.getByTestId("select-element");
     expect(select.firstChild).toHaveAttribute("aria-controls", "radix-:r2:");
     expect(select.firstChild).toHaveAttribute("aria-expanded", "false");
     expect(select.firstChild).toHaveAttribute("aria-haspopup", "dialog");
     expect(select.firstChild).toHaveStyle("width: 100%;");
-    // expect(select.firstChild).toHaveClass(
-    //   "w-[400px] flex justify-between items-center px-3 h-11 border border-border bg-transparent rounded-md cursor-pointer text-muted-foreground"
-    // );
-    // expect(select.firstChild).toContainHTML(
-    //   '<p class="truncate text-sm">Placeholder</p>'
-    // );
+    expect(select.firstChild).toHaveClass(
+      "w-[400px] flex justify-between items-center px-3 h-11 border border-border bg-transparent rounded-md cursor-pointer"
+    );
+    expect(select.firstChild).toContainHTML(
+      '<p class="truncate text-[13px] text-muted-foreground opacity-50">Placeholder</p>'
+    );
   });
 });
