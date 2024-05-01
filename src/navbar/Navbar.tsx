@@ -1,5 +1,5 @@
 import { Button } from '@/button';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/utils';
 import { ToggleTheme } from '@/theme';
 import { NavbarProps } from '@/types';
 import { AlignLeft, User } from 'lucide-react';

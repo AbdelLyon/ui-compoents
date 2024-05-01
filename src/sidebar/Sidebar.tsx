@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/utils';
 import { SidebarMenu } from './SidebarMenu';
 import { SidebarProps } from '@/types';
 

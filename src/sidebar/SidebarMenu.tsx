@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/utils';
 import { Navigation, SidebarProps } from '@/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
