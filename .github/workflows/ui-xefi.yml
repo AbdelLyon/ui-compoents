@@ -1,33 +1,41 @@
 name: ui-fetcher CI
 on:
   push:
-    branches: ['main', 'develop', 'release']
+    branches: ['master']
   pull_request:
-    branches: ['main', 'develop', 'release']
+    types: [opened, synchronize]
 
 jobs:
   build:
+    name: Build and Test
+    timeout-minutes: 15
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
+    # To use Remote Caching, uncomment the next lines and follow the steps below.
+    # env:
+    #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ matrix.node-version }} and install PNPM
-        uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm' # Cache PNPM packages
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@global'
+          fetch-depth: 2
 
-      - run: npm install -g pnpm # Install PNPM globally
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
 
-      - run: pnpm install --frozen-lockfile
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
-      - run: pnpm run build
+      - name: Install dependencies
+        run: pnpm install
 
-      - run: pnpm test
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
