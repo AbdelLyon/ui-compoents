@@ -1,7 +1,0 @@
-{
-    "extends": [
-        "plugin:react/recommended",
-        "standard",
-        "plugin:tailwindcss/recommended"
-    ]
-}
