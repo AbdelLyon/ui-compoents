@@ -1,125 +1,123 @@
 {
-  "name": "@xefi/ui",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    "./style.css": "./dist/style.css",
-    "./providers": {
-      "import": "./dist/providers/@xefi/ui.es.js",
-      "require": "./dist/providers/@xefi/ui.cjs.js",
-      "types": "./dist/providers/index.d.ts"
-    },
-    "./layout": {
-      "import": "./dist/layout/@xefi/ui.es.js",
-      "require": "./dist/layout/@xefi/ui.cjs.js",
-      "types": "./dist/layout/index.d.ts"
-    },
-    "./grid": {
-      "import": "./dist/grid/@xefi/ui.es.js",
-      "require": "./dist/grid/@xefi/ui.cjs.js",
-      "types": "./dist/grid/index.d.ts"
-    },
-    "./theme": {
-      "import": "./dist/theme/@xefi/ui.es.js",
-      "require": "./dist/theme/@xefi/ui.cjs.js",
-      "types": "./dist/theme/index.d.ts"
-    },
-    "./button": {
-      "import": "./dist/button/@xefi/ui.es.js",
-      "require": "./dist/button/@xefi/ui.cjs.js",
-      "types": "./dist/button/index.d.ts"
-    },
-    "./card": {
-      "import": "./dist/card/@xefi/ui.es.js",
-      "require": "./dist/card/@xefi/ui.cjs.js",
-      "types": "./dist/card/index.d.ts"
-    },
-    "./hooks": {
-      "import": "./dist/hooks/@xefi/ui.es.js",
-      "require": "./dist/hooks/@xefi/ui.cjs.js",
-      "types": "./dist/hooks/index.d.ts"
-    },
-    "./form": {
-      "import": "./dist/form/@xefi/ui.es.js",
-      "require": "./dist/form/@xefi/ui.cjs.js",
-      "types": "./dist/form/index.d.ts"
-    },
-    "./sidebar": {
-      "import": "./dist/sidebar/@xefi/ui.es.js",
-      "require": "./dist/sidebar/@xefi/ui.cjs.js",
-      "types": "./dist/sidebar/index.d.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*"
-      ]
-    }
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "test": "vitest"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mui/material": "^5.15.15",
-    "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-label": "^2.0.2",
-    "@radix-ui/react-menubar": "^1.0.4",
-    "@radix-ui/react-popover": "^1.0.7",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@tanstack/react-query": "^5.32.1",
-    "@vitejs/plugin-react-swc": "^3.6.0",
-    "autoprefixer": "^10.4.19",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "cmdk": "^1.0.0",
-    "lucide-react": "^0.376.0",
-    "next-themes": "^0.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-intersection-observer": "^9.10.1",
-    "vite-plugin-dts": "^3.9.0"
-  },
-  "devDependencies": {
-    "@nabla/vite-plugin-eslint": "^2.0.4",
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^15.0.5",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^20.11.30",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "eslint-plugin-simple-import-sort": "^12.1.0",
-    "eslint-plugin-tailwindcss": "^3.15.1",
-    "jsdom": "^24.0.0",
-    "postcss": "^8.4.38",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.4.3",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vite-plugin-dts": "^3.7.3",
-    "vite-tsconfig-paths": "^4.3.2",
-    "vitest": "^1.5.3"
-  }
+	"name": "@xefi/ui",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		"./style.css": "./dist/style.css",
+		"./providers": {
+			"import": "./dist/providers/@xefi/ui.es.js",
+			"require": "./dist/providers/@xefi/ui.cjs.js",
+			"types": "./dist/providers/index.d.ts"
+		},
+		"./layout": {
+			"import": "./dist/layout/@xefi/ui.es.js",
+			"require": "./dist/layout/@xefi/ui.cjs.js",
+			"types": "./dist/layout/index.d.ts"
+		},
+		"./grid": {
+			"import": "./dist/grid/@xefi/ui.es.js",
+			"require": "./dist/grid/@xefi/ui.cjs.js",
+			"types": "./dist/grid/index.d.ts"
+		},
+		"./theme": {
+			"import": "./dist/theme/@xefi/ui.es.js",
+			"require": "./dist/theme/@xefi/ui.cjs.js",
+			"types": "./dist/theme/index.d.ts"
+		},
+		"./button": {
+			"import": "./dist/button/@xefi/ui.es.js",
+			"require": "./dist/button/@xefi/ui.cjs.js",
+			"types": "./dist/button/index.d.ts"
+		},
+		"./card": {
+			"import": "./dist/card/@xefi/ui.es.js",
+			"require": "./dist/card/@xefi/ui.cjs.js",
+			"types": "./dist/card/index.d.ts"
+		},
+		"./hooks": {
+			"import": "./dist/hooks/@xefi/ui.es.js",
+			"require": "./dist/hooks/@xefi/ui.cjs.js",
+			"types": "./dist/hooks/index.d.ts"
+		},
+		"./form": {
+			"import": "./dist/form/@xefi/ui.es.js",
+			"require": "./dist/form/@xefi/ui.cjs.js",
+			"types": "./dist/form/index.d.ts"
+		},
+		"./sidebar": {
+			"import": "./dist/sidebar/@xefi/ui.es.js",
+			"require": "./dist/sidebar/@xefi/ui.cjs.js",
+			"types": "./dist/sidebar/index.d.ts"
+		}
+	},
+	"typesVersions": {
+		"*": {
+			"*": [
+				"./dist/*"
+			]
+		}
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview",
+		"test": "vitest"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@mui/material": "^5.15.15",
+		"@radix-ui/react-checkbox": "^1.0.4",
+		"@radix-ui/react-dialog": "^1.0.5",
+		"@radix-ui/react-label": "^2.0.2",
+		"@radix-ui/react-menubar": "^1.0.4",
+		"@radix-ui/react-popover": "^1.0.7",
+		"@radix-ui/react-slot": "^1.0.2",
+		"@tanstack/react-query": "^5.32.1",
+		"autoprefixer": "^10.4.19",
+		"class-variance-authority": "^0.7.0",
+		"clsx": "^2.1.1",
+		"cmdk": "^1.0.0",
+		"lucide-react": "^0.376.0",
+		"next-themes": "^0.3.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-intersection-observer": "^9.10.1"
+	},
+	"devDependencies": {
+		"@nabla/vite-plugin-eslint": "^2.0.4",
+		"@testing-library/jest-dom": "^6.4.2",
+		"@testing-library/react": "^15.0.5",
+		"@testing-library/react-hooks": "^8.0.1",
+		"@testing-library/user-event": "^14.5.2",
+		"@types/node": "^20.11.30",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@typescript-eslint/eslint-plugin": "^7.2.0",
+		"@typescript-eslint/parser": "^7.2.0",
+		"@vitejs/plugin-react": "^4.2.1",
+		"@vitejs/plugin-react-swc": "^3.6.0",
+		"eslint": "^8.57.0",
+		"eslint-plugin-react": "^7.34.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"eslint-plugin-simple-import-sort": "^12.1.0",
+		"eslint-plugin-tailwindcss": "^3.15.1",
+		"jsdom": "^24.0.0",
+		"postcss": "^8.4.38",
+		"tailwind-merge": "^2.3.0",
+		"tailwindcss": "^3.4.3",
+		"tailwindcss-animate": "^1.0.7",
+		"typescript": "^5.2.2",
+		"vite": "^5.2.0",
+		"vite-plugin-dts": "^3.9.0",
+		"vite-tsconfig-paths": "^4.3.2",
+		"vitest": "^1.5.3"
+	}
 }
