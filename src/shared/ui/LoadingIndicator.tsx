@@ -1,30 +1,21 @@
-import { ChevronDown, Loader } from "lucide-react";
+import { Loader } from 'lucide-react';
 
 export const RenderLoader = ({ className }: { className: string }) => (
-  <div className={className}>
-    <Loader size={21} className="animate-spin mb-1 font-extrabold" />
-  </div>
+	<div className={className}>
+		<Loader size={21} className='mb-1 animate-spin font-extrabold' />
+	</div>
 );
 
 export const RenderLoadingIndicator = ({
-  isFetchingNextPage,
-  fetchNextPage,
+	isFetchingNextPage,
 }: {
-  isFetchingNextPage: boolean;
-  fetchNextPage?: any;
+	isFetchingNextPage: boolean;
 }) => (
-  <>
-    <ChevronDown
-      size={16}
-      className="text-center w-full cursor-pointer"
-      onClick={() => {
-        if (fetchNextPage) fetchNextPage();
-      }}
-    />
-    {isFetchingNextPage && (
-      <div className="fixed top-0 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px] ">
-        <RenderLoader className="fixed bottom-2 flex justify-center text-center right-0 w-full z-10" />
-      </div>
-    )}
-  </>
+	<>
+		{isFetchingNextPage && (
+			<div className='fixed inset-y-0 left-0 flex size-full items-center justify-center backdrop-blur-[2px] '>
+				<RenderLoader className='fixed bottom-2 right-0 z-10 flex w-full justify-center text-center' />
+			</div>
+		)}
+	</>
 );

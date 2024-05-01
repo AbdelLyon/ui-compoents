@@ -1,7 +1,8 @@
+import { cn } from "@/shared/lib/utils";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-const ToggleTheme = () => {
+const ToggleTheme = ({ className }: { className?: string }) => {
   const { setTheme, theme } = useTheme();
 
   const handleClick = () => {
@@ -11,7 +12,10 @@ const ToggleTheme = () => {
 
   return (
     <button
-      className="cursor-pointer transition-all hover:opacity-80  "
+      className={cn(
+        "cursor-pointer transition-all hover:opacity-80",
+        className
+      )}
       onClick={handleClick}
     >
       <Sun size={18} className="hidden dark:block" />

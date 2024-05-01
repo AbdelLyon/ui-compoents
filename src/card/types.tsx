@@ -1,11 +1,11 @@
-import { ComponentProps, ReactNode } from "react";
-import { Card } from "../shared/ui/card";
-
-export type CustomCardProps = ComponentProps<typeof Card> & {
+import { ReactNode } from "react";
+export type CustomCardProps = {
   className?: string;
+  fetchNextPage?: () => void;
   width?: number | string;
-  img?: ReactNode;
-  title: string;
-  description?: string;
-  footer?: ReactNode;
+  height?: number | string;
+  clickable?: boolean;
+  count?: number;
+  index?: number;
+  children?: ReactNode;
 };
