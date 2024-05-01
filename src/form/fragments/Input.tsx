@@ -1,5 +1,5 @@
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
-import { cn } from '../../shared/lib/utils';
+import { cn } from '@/utils';
 import { Dispatch } from 'react';
 
 type Props = { className?: string };

@@ -1,10 +1,10 @@
 import { memo, useCallback } from 'react';
 import { SelectProps } from '../types';
-import { Command, CommandItem, CommandList } from '../../shared/ui/command';
+import { Command, CommandItem, CommandList } from '@/ui/command';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '../../shared/lib/utils';
-import InputCustom from '../InputCustom';
-import { PopoverTrigger } from '../../shared/ui/popover';
+import { cn } from '@/utils';
+import InputCustom from '@/form/InputCustom';
+import { PopoverTrigger } from '@/ui/popover';
 
 const Trigger = ({
 	width = '400px',

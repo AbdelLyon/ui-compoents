@@ -4,8 +4,8 @@ import { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
 
-import { cn } from '@/shared/lib/utils';
-import { Props } from '../../button/types';
+import { cn } from '@/utils';
+import { Props } from '@/button/types';
 
 const defaultButtonVariants = {
 	default: 'text-white bg-primary hover:opacity-80 transition-all',

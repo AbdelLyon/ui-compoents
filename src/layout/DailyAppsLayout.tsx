@@ -1,6 +1,6 @@
 import { Navbar } from '@/navbar/Navbar';
 import { Sidebar } from '@/sidebar/Sidebar';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/utils';
 import { useRef, useState } from 'react';
 import { DailyAppsLayoutProps } from '@/types';
 

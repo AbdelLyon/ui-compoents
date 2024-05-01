@@ -1,11 +1,11 @@
 import { useEffect, memo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { cn } from '../shared/lib/utils';
-import { RenderLoader } from '../shared/ui/LoadingIndicator';
+import { cn } from '@/utils';
+import { RenderLoader } from '@/ui/LoadingIndicator';
 import { SelectProps } from './types';
-import { Popover, PopoverContent } from '@/shared/ui/popover';
+import { Popover, PopoverContent } from '@/ui/popover';
 import { SearchOption, Select, Trigger } from './fragments/Select';
-import { Label } from '../shared/ui/label';
+import { Label } from '@/ui/label';
 
 export const SelectSearch = memo(
 	({

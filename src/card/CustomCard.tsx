@@ -1,13 +1,13 @@
+import { cn } from '@/utils';
+import { CustomCardProps } from './types';
+import { ReactNode } from 'react';
 import {
 	Card,
 	CardContent,
-	CardTitle,
-	CardHeader,
 	CardFooter,
-} from '@/shared/ui/card';
-import { cn } from '@/shared/lib/utils';
-import { CustomCardProps } from './types';
-import { ReactNode } from 'react';
+	CardHeader,
+	CardTitle,
+} from '@/ui/card';
 
 export const CardImage = ({
 	children,
