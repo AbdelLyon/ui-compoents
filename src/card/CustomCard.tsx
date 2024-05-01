@@ -1,96 +1,94 @@
 import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardHeader,
-  CardFooter,
-} from "@/shared/ui/card";
-import { cn } from "@/shared/lib/utils";
-import { CustomCardProps } from "./types";
-import { ReactNode } from "react";
+	Card,
+	CardContent,
+	CardTitle,
+	CardHeader,
+	CardFooter,
+} from '@/shared/ui/card';
+import { cn } from '@/shared/lib/utils';
+import { CustomCardProps } from './types';
+import { ReactNode } from 'react';
 
 export const CardImage = ({
-  children,
-  height,
-  width,
-  className,
+	children,
+	height,
+	width,
+	className,
 }: {
-  children: ReactNode;
-  height?: string | number;
-  width?: string | number;
-  className?: string;
+	children: ReactNode;
+	height?: string | number;
+	width?: string | number;
+	className?: string;
 }) => {
-  return (
-    <div
-      className={cn(
-        "relative overflow-hidden transition-transform duration-300 ease-in-out transform",
-        className
-      )}
-      style={{ minHeight: 100, minWidth: 150, height, width }}
-    >
-      {children}
-    </div>
-  );
+	return (
+		<div
+			className={cn(
+				'relative overflow-hidden transition-transform duration-300 ease-in-out transform',
+				className
+			)}
+			style={{ minHeight: 100, minWidth: 150, height, width }}>
+			{children}
+		</div>
+	);
 };
 
 export const CustomCardTitle = ({
-  children,
-  className,
+	children,
+	className,
 }: {
-  children: ReactNode;
-  className?: string;
+	children: ReactNode;
+	className?: string;
 }) => {
-  return (
-    <CardHeader>
-      <CardTitle className={className}>{children}</CardTitle>
-    </CardHeader>
-  );
+	return (
+		<CardHeader>
+			<CardTitle className={className}>{children}</CardTitle>
+		</CardHeader>
+	);
 };
 
 export const CustomCardContent = ({
-  children,
-  className,
+	children,
+	className,
 }: {
-  children: ReactNode;
-  className?: string;
+	children: ReactNode;
+	className?: string;
 }) => {
-  return (
-    <CardContent className={cn("flex-1", className)}>{children}</CardContent>
-  );
+	return (
+		<CardContent className={cn('flex-1', className)}>{children}</CardContent>
+	);
 };
 
 export const CustomCardFooter = ({
-  children,
-  className,
+	children,
+	className,
 }: {
-  children: ReactNode;
-  className?: string;
+	children: ReactNode;
+	className?: string;
 }) => {
-  return <CardFooter className={className}>{children}</CardFooter>;
+	return <CardFooter className={className}>{children}</CardFooter>;
 };
 
 export const CustomCard = ({
-  className,
-  width,
-  height,
-  clickable = false,
-  children,
+	className,
+	width,
+	height,
+	clickable = false,
+	children,
 }: CustomCardProps) => {
-  return (
-    <Card
-      className={cn(
-        "border-border relative flex flex-col",
-        {
-          "border-border rounded-b-sm cursor-pointer transition duration-300 ease-in-out transform hover:shadow-lg":
-            clickable,
-        },
-        className
-      )}
-      style={{ minWidth: 200, minHeight: 200, width, height }}
-    >
-      {children}
-    </Card>
-  );
+	return (
+		<Card
+			className={cn(
+				'border-foreground relative flex flex-col',
+				{
+					'border-foreground rounded-b-sm cursor-pointer transition duration-300 ease-in-out transform hover:shadow-lg':
+						clickable,
+				},
+				className
+			)}
+			style={{ minWidth: 200, minHeight: 200, width, height }}>
+			{children}
+		</Card>
+	);
 };
 
 export default CustomCard;
