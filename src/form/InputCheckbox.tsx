@@ -1,5 +1,6 @@
 import { cn } from "../shared/lib/utils";
 import { Checkbox } from "../shared/ui/checkbox";
+import { Label } from "../shared/ui/label";
 import { CheckboxProps } from "./types";
 
 const InputCheckbox = (props: Omit<CheckboxProps, "type">) => {
@@ -7,9 +8,7 @@ const InputCheckbox = (props: Omit<CheckboxProps, "type">) => {
   return (
     <div className={cn("flex items-center space-x-2", className)}>
       <Checkbox {...rest} />
-      <label className="text-sm" htmlFor={htmlForm}>
-        {label}
-      </label>
+      <Label htmlFor={htmlForm}>{label}</Label>
     </div>
   );
 };

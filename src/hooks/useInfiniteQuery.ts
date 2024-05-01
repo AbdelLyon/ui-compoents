@@ -21,19 +21,17 @@ const useInfiniteQuery = <Data, Request>({
     queryFn: ({ pageParam }) =>
       request({ search: { ...search, page: pageParam } }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, pages, limit = 10) => {
-      const nextPage = pages.length * limit + 1;
+    getNextPageParam: (lastPage, pages, pageParam = 10) => {
+      const nextPage = pages.length * pageParam + 1;
 
-      if (lastPage.length < limit) return undefined;
+      if (lastPage.length < pageParam) return undefined;
 
       return nextPage;
     },
     enabled,
   });
 
-  const flattenedData = data?.pages.flatMap((page) =>
-    page.map((item: Data) => item)
-  );
+  const flattenedData = data?.pages.flatMap((data) => data) ?? [];
 
   return {
     fetchNextPage,
