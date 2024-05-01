@@ -1,9 +1,9 @@
 name: ui-fetcher CI
 on:
   push:
-    branches: ["main", "develop", "release"]
+    branches: ['main', 'develop', 'release']
   pull_request:
-    branches: ["main", "develop", "release"]
+    branches: ['main', 'develop', 'release']
 
 jobs:
   build:
@@ -16,16 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }} and Yarn
+      - name: Use Node.js ${{ matrix.node-version }} and PNPM
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "yarn" # Cache Yarn packages
-          registry-url: "https://registry.npmjs.org"
-          scope: "@global"
+          cache: 'pnpm' # Cache PNPM packages
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@global'
 
-      - run: yarn install --frozen-lockfile
+      - run: npm install -g pnpm # Install PNPM globally
 
-      - run: yarn run build
+      - run: pnpm install --frozen-lockfile
 
-      - run: yarn test
+      - run: pnpm run build
+
+      - run: pnpm test
