@@ -6,7 +6,10 @@
 	scrollbar-width: thin;
 }
 .bg-sidebar {
-	background-color: hsl(0, 0%, 12%);
+	background-image: url("./assets/svg/arrow-sidebar-logo.inline.svg");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-attachment: fixed;
 }
 
 .bg-LinksSidebar,
