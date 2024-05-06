@@ -2,7 +2,7 @@ import { Button } from '@/button';
 import { cn } from '@/utils';
 import { ToggleTheme } from '@/theme';
 import { NavbarProps } from '@/types';
-import { AlignLeft, User } from 'lucide-react';
+import { Package2, User } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 export const Navbar = ({
@@ -11,7 +11,6 @@ export const Navbar = ({
 	navigation,
 	className,
 	toggleTheme,
-	toggleDropdownSidebar,
 }: NavbarProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLLIElement>(null);
@@ -39,22 +38,21 @@ export const Navbar = ({
 	return (
 		<header
 			className={cn(
-				'h-16 box-shadow-header flex fixed w-full z-40 top-0 items-center dark:border-b border-foreground bg-white dark:bg-background shadow-lg dark:shadow-none px-4 md:pl-0 md:pr-4',
+				'h-16 box-shadow-header flex sticky w-screen z-40 top-0 items-center dark:border-b border-foreground bg-white dark:bg-background shadow-lg dark:shadow-none md:pl-0 md:pr-4',
 				className
 			)}>
-			<div className='border-foreground flex items-center border-r md:min-w-[290px]'>
-				<AlignLeft
-					className='size-5 cursor-pointer md:hidden dark:text-white'
-					onClick={toggleDropdownSidebar}
-				/>
-
-				<h1 className='hidden w-full text-center md:block'>{title}</h1>
+			{/* Refactoring a faire ici */}
+			<div className='hidden lg:flex border-foreground items-center border-r lg:min-w-[290px]'>
+				<h1 className='w-full text-center'>LOGO DAILY</h1>
 			</div>
-			<div className='mx-4 flex w-full items-center justify-between text-black'>
-				<h1 className='cursor-default select-none pl-2 text-2xl font-semibold dark:text-white'>
+			<div className='flex lg:hidden ml-4 items-center '>
+				<Package2 className='h-5 w-5 transition-all group-hover:scale-110' />
+			</div>
+			<div className='mx-4 flex w-full items-center text-black'>
+				<h1 className='hidden lg:block cursor-default select-none pl-2 text-2xl font-semibold dark:text-white'>
 					{title}
 				</h1>
-				<nav className='flex items-center gap-4'>
+				<nav className='flex items-center gap-4 w-full justify-end'>
 					{toggleTheme && <ToggleTheme className='dark:text-white' />}
 					<ul className='flex items-center'>
 						<li className='relative inline-block text-left' ref={dropdownRef}>

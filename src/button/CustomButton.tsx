@@ -14,7 +14,6 @@ const CustomButton = ({
 			{...props}
 			className={cn(className, {
 				'flex flex-row-reverse': iconPosition === 'left' && icon,
-				'min-w-28': icon,
 			})}>
 			<span
 				className={cn({
