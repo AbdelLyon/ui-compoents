@@ -14,6 +14,7 @@ export type SidebarProps = {
 	Button?: ReactNode;
 	pathname: string;
 	className?: string;
+	setOpenDropdown?: (isOpen: boolean) => void;
 };
 
 export type NavbarProps = {
@@ -22,7 +23,8 @@ export type NavbarProps = {
 	navigation: string[];
 	className?: string;
 	toggleTheme?: boolean;
-	toggleDropdownSidebar?: () => void;
+	setOpenDropdown: (isOpen: boolean) => void;
+	isOpenDropdown: boolean;
 };
 
 export type DailyAppsLayoutProps = {
