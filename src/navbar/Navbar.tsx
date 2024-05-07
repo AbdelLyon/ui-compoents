@@ -2,7 +2,7 @@ import { Button } from '@/button';
 import { cn } from '@/utils';
 import { ToggleTheme } from '@/theme';
 import { NavbarProps } from '@/types';
-import { Package2, User } from 'lucide-react';
+import { AlignLeft, User } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 export const Navbar = ({
@@ -38,18 +38,16 @@ export const Navbar = ({
 	return (
 		<header
 			className={cn(
-				'h-16 box-shadow-header flex sticky w-screen z-40 top-0 items-center dark:border-b border-foreground bg-white dark:bg-background shadow-lg dark:shadow-none md:pl-0 md:pr-4',
+				'h-16 box-shadow-header flex sticky w-full z-40 top-0 items-center dark:border-b border-foreground bg-white dark:bg-background shadow-lg dark:shadow-none md:pl-0 md:pr-4',
 				className
 			)}>
 			{/* Refactoring a faire ici */}
-			<div className='hidden lg:flex border-foreground items-center border-r lg:min-w-[290px]'>
-				<h1 className='w-full text-center'>LOGO DAILY</h1>
-			</div>
-			<div className='flex lg:hidden ml-4 items-center '>
-				<Package2 className='h-5 w-5 transition-all group-hover:scale-110' />
-			</div>
-			<div className='mx-4 flex w-full items-center text-black'>
-				<h1 className='hidden lg:block cursor-default select-none pl-2 text-2xl font-semibold dark:text-white'>
+			<h1 className='hidden md:block w-[290px] border-r border-foreground'>
+				LOGO DAILY
+			</h1>
+			<AlignLeft className='h-5 w-5 ml-4 cursor-pointer  dark:text-white' />
+			<div className='flex flex-1 w-full items-center text-black pl-2'>
+				<h1 className='hidden md:block cursor-default select-none text-2xl font-semibold dark:text-white'>
 					{title}
 				</h1>
 				<nav className='flex items-center gap-4 w-full justify-end'>

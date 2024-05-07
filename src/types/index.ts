@@ -11,10 +11,10 @@ export type Navigation = {
 export type SidebarProps = {
 	navigation: Navigation[];
 	iconSidebar?: string;
-	Button?: ReactNode;
 	pathname: string;
 	className?: string;
 	setOpenDropdown?: (isOpen: boolean) => void;
+	btnIcon?: IconProp;
 };
 
 export type NavbarProps = {
