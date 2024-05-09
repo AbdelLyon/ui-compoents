@@ -10,11 +10,11 @@ import { Label } from '@/ui/label';
 export const SelectSearch = memo(
 	({
 		onSelectChange,
-		options = [],
+		options,
 		label,
 		placeholder,
 		isSearchable,
-		width = '100%',
+		width,
 		value,
 		error,
 		isFetchingNextPage,
@@ -55,13 +55,15 @@ export const SelectSearch = memo(
 						placeholder={placeholder}
 						width={width}
 					/>
-					<PopoverContent className={cn('mt-1 p-3 w-full')} style={{ width }}>
+					<PopoverContent style={{ width }}>
 						{isSearchable && (
-							<SearchOption
-								error={error}
-								onSearchChange={onSearchChange}
-								placeholderSearch={placeholderSearch}
-							/>
+							<div className='m-3'>
+								<SearchOption
+									error={error}
+									onSearchChange={onSearchChange}
+									placeholderSearch={placeholderSearch}
+								/>
+							</div>
 						)}
 
 						<Select
@@ -73,6 +75,7 @@ export const SelectSearch = memo(
 							value={value}
 							placeholder={placeholder}
 							width={width}
+							className='px-3'
 						/>
 						{isFetchingNextPage && (
 							<div className='fixed top-1 left-0 bottom-0 h-full w-full flex justify-center items-center backdrop-blur-[2px]'>
@@ -95,5 +98,3 @@ export const SelectSearch = memo(
 		);
 	}
 );
-
-export default SelectSearch;

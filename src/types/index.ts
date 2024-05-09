@@ -15,16 +15,18 @@ export type SidebarProps = {
 	className?: string;
 	setOpenDropdown?: (isOpen: boolean) => void;
 	btnIcon?: IconProp;
+	isOpenDropdown?: boolean;
 };
 
 export type NavbarProps = {
-	title: string;
-	username: string;
-	navigation: string[];
+	applicationName?: string;
+	user?: string;
+	accountNavigation: string[];
 	className?: string;
 	toggleTheme?: boolean;
-	setOpenDropdown: (isOpen: boolean) => void;
-	isOpenDropdown: boolean;
+	setOpenDropdown?: (isOpen: boolean) => void;
+	isOpenDropdown?: boolean;
+	Logo?: ReactNode;
 };
 
 export type DailyAppsLayoutProps = {

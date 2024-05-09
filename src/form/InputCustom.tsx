@@ -6,7 +6,7 @@ import { HTMLAttributes, useRef, useState, useEffect, memo } from 'react';
 import { MailIcon, PassowrIcon, SearchIcon } from './fragments/Input';
 import { Label } from '@/ui/label';
 
-const InputCustom = memo(
+export const InputCustom = memo(
 	({
 		type = 'text',
 		classNameContainer,
@@ -79,5 +79,3 @@ const InputCustom = memo(
 		);
 	}
 );
-
-export default InputCustom;

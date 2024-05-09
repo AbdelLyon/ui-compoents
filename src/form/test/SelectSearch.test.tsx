@@ -37,10 +37,11 @@ describe('SelectSearch', () => {
 		expect(select.firstChild).toHaveAttribute('aria-controls', 'radix-:r2:');
 		expect(select.firstChild).toHaveAttribute('aria-expanded', 'false');
 		expect(select.firstChild).toHaveAttribute('aria-haspopup', 'dialog');
-		expect(select.firstChild).toHaveStyle('width: 100%;');
 		expect(select.firstChild).toHaveClass(
-			'w-[400px] flex justify-between items-center px-3 h-11 border border-foreground bg-transparent rounded-md cursor-pointer'
+			' flex h-11 cursor-pointer items-center justify-between rounded-md border border-border bg-transparent px-3'
 		);
+
+		('99%');
 		expect(select.firstChild).toContainHTML(
 			'<p class="truncate text-[13px] text-muted-foreground opacity-50">Placeholder</p>'
 		);

@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import CustomButton from '@/button/CustomButton';
+import { CustomButton } from '@/button/CustomButton';
 import { defaultButtonVariants, defaultButtonSizes } from '@/ui/button';
 import { ButtonSize, ButtonVariant } from '../button/types';
 

@@ -1,99 +1,169 @@
-import { Button } from '@/button';
-import { cn } from '@/utils';
-import { ToggleTheme } from '@/theme';
-import { NavbarProps } from '@/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AlignLeft, User } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { NavbarProps, Navigation } from '@/types';
+import { cn } from '@/utils';
+import {
+	Menubar,
+	MenubarContent,
+	MenubarItem,
+	MenubarMenu,
+	MenubarTrigger,
+} from '@/ui/menubar';
+import { ToggleTheme } from '@/theme';
+import { Button } from '@/button';
 
-export const Navbar = ({
-	title,
-	username,
-	navigation,
+const AppLogo = ({
+	Logo,
 	className,
-	toggleTheme,
+}: {
+	Logo: React.ReactNode;
+	className?: string;
+}) => {
+	return <div className={cn('hidden md:block', className)}>{Logo}</div>;
+};
+
+const NavigationItems = ({
+	pagesNavigation,
+}: {
+	pagesNavigation: Navigation[];
+}) => {
+	return (
+		<ul className='hidden md:flex gap-4 dark:text-white text-sm ml-8'>
+			{pagesNavigation?.map((item: Navigation) => (
+				<li key={item.name} className='flex items-center gap-2'>
+					{item.icon && <FontAwesomeIcon icon={item.icon} />}
+					<a href={item.navigate}>{item.name}</a>
+				</li>
+			))}
+		</ul>
+	);
+};
+
+const MenuBarNavigation = ({
+	navigation,
+	Icon,
+}: {
+	navigation?: string[] | Navigation[];
+	Icon: React.ReactNode;
+}) => {
+	return (
+		<Menubar className='border-none shadow-none'>
+			<MenubarMenu>
+				<MenubarTrigger>{Icon}</MenubarTrigger>
+				<MenubarContent className='text-sm font-medium w-[208px]'>
+					{navigation?.map((item: string | Navigation, index: number) => (
+						<MenubarItem
+							key={index}
+							className='flex items-center gap-1 dark:text-white'>
+							{typeof item === 'string' ? (
+								item
+							) : (
+								<>
+									<FontAwesomeIcon icon={item.icon} />
+									<a href={item.navigate}>{item.name}</a>
+								</>
+							)}
+						</MenubarItem>
+					))}
+				</MenubarContent>
+			</MenubarMenu>
+		</Menubar>
+	);
+};
+
+const DailyAppsNavbar = ({
+	applicationName,
+	user,
+	accountNavigation,
+	className,
+	setOpenDropdown,
+	isOpenDropdown,
+	Logo,
 }: NavbarProps) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const dropdownRef = useRef<HTMLLIElement>(null);
-
-	// 1 :il faudra faire un hook personaliser dans @xefi/hooks pour la logique ci dessous
-	// 2 : il faudra gerer le responsive avec un hook eu lieu d'utiliser les class tailwind
-
-	useEffect(() => {
-		const handleOutsideClick = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
-				setIsOpen(false);
-			}
-		};
-
-		document.addEventListener('mousedown', handleOutsideClick);
-
-		return () => {
-			document.removeEventListener('mousedown', handleOutsideClick);
-		};
-	}, []);
-
 	return (
 		<header
 			className={cn(
-				'h-16 box-shadow-header flex sticky w-full z-40 top-0 items-center dark:border-b border-foreground bg-white dark:bg-background shadow-lg dark:shadow-none md:pl-0 md:pr-4',
+				'h-16 box-shadow-header flex fixed w-full z-40 top-0 items-center border-b border-border bg-white dark:bg-background shadow-lg dark:shadow-none px-4',
 				className
 			)}>
-			{/* Refactoring a faire ici */}
-			<h1 className='hidden md:block w-[290px] border-r border-foreground'>
-				LOGO DAILY
-			</h1>
-			<AlignLeft className='h-5 w-5 ml-4 cursor-pointer  dark:text-white' />
+			<AppLogo
+				Logo={Logo}
+				className='w-[275px] border-r border-border justify-center'
+			/>
+			<AlignLeft
+				className='md:hidden h-5 w-5 cursor-pointer  dark:text-white'
+				onClick={() => setOpenDropdown?.(!isOpenDropdown)}
+			/>
 			<div className='flex flex-1 w-full items-center text-black pl-2'>
 				<h1 className='hidden md:block cursor-default select-none text-2xl font-semibold dark:text-white'>
-					{title}
+					{applicationName}
 				</h1>
 				<nav className='flex items-center gap-4 w-full justify-end'>
-					{toggleTheme && <ToggleTheme className='dark:text-white' />}
-					<ul className='flex items-center'>
-						<li className='relative inline-block text-left' ref={dropdownRef}>
-							<Button
-								// eslint-disable-next-line tailwindcss/no-custom-classname
-								className='bg-foreground dark:bg-background dark:border-foreground hover:bg-foreground w-[200px] border border-gray-200 font-medium dark:text-white '
-								variant='outline'
-								iconPosition='left'
-								icon={<User className='size-4' />}
-								onClick={() => setIsOpen(!isOpen)}>
-								<span className='mt-1'>
-									{/* {toUpperCase(username)} */}
-									{username}
-								</span>
-							</Button>
-
-							<div
-								className={cn(
-									'absolute right-0 top-[50px] z-50 min-w-[200px] origin-top-right opacity-0 transition-opacity duration-100 ease-in',
-									{
-										'opacity-100 rounded-md bg-background shadow-lg border border-foreground focus:outline-none':
-											isOpen,
-									}
-								)}>
-								{navigation?.map((item: string, index: number) => (
-									<Button
-										key={index}
-										className={cn(
-											'py-2 cursor-pointer border-none flex justify-start gap-3 dark:text-white w-full transition-colors duration-150 hover:bg-foreground',
-											{
-												'rounded-t-none': index === navigation.length - 1,
-												'rounded-b-none': index === 0,
-											}
-										)}
-										variant='outline'>
-										{item}
-									</Button>
-								))}
-							</div>
-						</li>
-					</ul>
+					<ToggleTheme className='dark:text-white' />
+					<MenuBarNavigation
+						navigation={accountNavigation}
+						Icon={
+							<>
+								<div className='hidden md:block px-3 relative dark:bg-background w-[200px] py-2 rounded-md cursor-pointer border border-border font-medium dark:text-white'>
+									<User className='size-5 absolute' />
+									<p className='ml-8 pr-8 w-full truncate'>{user}</p>
+								</div>
+								<User className='size-5 md:hidden dark:text-white dark:bg-background cursor-pointer' />
+							</>
+						}
+					/>
 				</nav>
 			</div>
 		</header>
 	);
 };
+
+const Navbar = ({
+	user,
+	pagesNavigation,
+	accountNavigation = [],
+	className,
+	Logo,
+}: Partial<NavbarProps> & { pagesNavigation: Navigation[] }) => {
+	return (
+		<header
+			className={cn(
+				'h-16 box-shadow-header flex sticky w-full z-40 top-0 items-center border-border bg-white dark:bg-background shadow-lg dark:shadow-none px-4',
+				className
+			)}>
+			{Logo && <AppLogo Logo={Logo} />}
+
+			<div className='flex flex-1 w-full items-center text-black pl-2'>
+				<nav className='flex items-center w-full'>
+					<NavigationItems pagesNavigation={pagesNavigation} />
+
+					<MenuBarNavigation
+						navigation={pagesNavigation}
+						Icon={
+							<AlignLeft className='h-5 w-5 cursor-pointer  dark:text-white' />
+						}
+					/>
+					<div className='flex items-center gap-4 w-full justify-end'>
+						<ToggleTheme className='dark:text-white' />
+						{accountNavigation && accountNavigation.length > 0 && (
+							<MenuBarNavigation
+								navigation={accountNavigation}
+								Icon={
+									<Button
+										className='bg-foreground dark:bg-background dark:border-border hover:bg-foreground w-[200px] border border-gray-200 font-medium dark:text-white'
+										variant='outline'
+										iconPosition='left'
+										icon={<User className='size-4' />}>
+										<span className='mt-1'>{user}</span>
+									</Button>
+								}
+							/>
+						)}
+					</div>
+				</nav>
+			</div>
+		</header>
+	);
+};
+
+export { Navbar, DailyAppsNavbar };
