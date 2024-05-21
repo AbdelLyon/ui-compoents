@@ -1,2 +1,2 @@
-import "@/index.css";
-export { default as Button } from "@/button/CustomButton";
+import '@/index.css';
+export { CustomButton as Button } from '@/button/CustomButton';

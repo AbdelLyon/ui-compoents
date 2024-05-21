@@ -2,7 +2,7 @@ import { Button } from '@/ui/button';
 import { ButtonProps } from './types';
 import { cn } from '@/utils';
 
-const CustomButton = ({
+export const CustomButton = ({
 	icon = undefined,
 	iconPosition = 'right',
 	className,
@@ -25,5 +25,3 @@ const CustomButton = ({
 		</Button>
 	);
 };
-
-export default CustomButton;

@@ -78,9 +78,9 @@ export const CustomCard = ({
 	return (
 		<Card
 			className={cn(
-				'border-foreground relative flex flex-col',
+				'border-border relative flex flex-col',
 				{
-					'border-foreground rounded-b-sm cursor-pointer transition duration-300 ease-in-out transform hover:shadow-lg':
+					'border-border rounded-b-sm cursor-pointer transition duration-300 ease-in-out transform hover:shadow-lg':
 						clickable,
 				},
 				className

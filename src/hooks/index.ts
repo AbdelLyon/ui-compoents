@@ -1,2 +1,2 @@
-export { default as useInfiniteQuery } from "@/hooks/useInfiniteQuery";
-export { default as useQuery } from "@/hooks/useQuery";
+export { useInfiniteQuery } from '@/hooks/useInfiniteQuery';
+export { useQuery } from '@/hooks/useQuery';

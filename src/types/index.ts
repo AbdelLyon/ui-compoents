@@ -11,20 +11,22 @@ export type Navigation = {
 export type SidebarProps = {
 	navigation: Navigation[];
 	iconSidebar?: string;
-	Button?: ReactNode;
 	pathname: string;
 	className?: string;
 	setOpenDropdown?: (isOpen: boolean) => void;
+	btnIcon?: IconProp;
+	isOpenDropdown?: boolean;
 };
 
 export type NavbarProps = {
-	title: string;
-	username: string;
-	navigation: string[];
+	applicationName?: string;
+	user?: string;
+	accountNavigation: string[];
 	className?: string;
 	toggleTheme?: boolean;
-	setOpenDropdown: (isOpen: boolean) => void;
-	isOpenDropdown: boolean;
+	setOpenDropdown?: (isOpen: boolean) => void;
+	isOpenDropdown?: boolean;
+	Logo?: ReactNode;
 };
 
 export type DailyAppsLayoutProps = {

@@ -13,6 +13,8 @@ const modules = [
 	'card',
 	'form',
 	'layout',
+	'sidebar',
+	'navbar',
 	'index',
 ];
 

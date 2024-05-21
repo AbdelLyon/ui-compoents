@@ -1,51 +1,54 @@
-import { Settings } from 'lucide-react';
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from '@/ui/tooltip';
-import { SidebarMenu } from './SidebarMenu';
 import { SidebarProps } from '@/types';
 import { cn } from '@/utils';
+import { CustomButton } from '@/button/CustomButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { SidebarMenu } from './SidebarMenu';
 
 export const Sidebar = ({
 	navigation,
-	Button,
 	pathname,
 	className,
+	btnIcon,
+	isOpenDropdown,
 }: SidebarProps) => {
 	return (
 		<aside
-			className={cn(
-				'fixed inset-y-0 left-0 z-10 w-14 flex-col border-r border-foreground bg-sidebar flex mt-16',
-				className
-			)}>
-			<nav className='flex flex-col items-center gap-4 px-2 mt-4'>
-				{Button && (
-					<>
-						{Button}
-						<div className='bg-foreground  w-full h-[1px]' />
-					</>
-				)}
+			className={cn('md:min-w-[290px] md:w-[290] md:px-2', className, {
+				'min-w-[290px] w-[290px] px-2': isOpenDropdown,
+			})}>
+			<div className='md:sticky top-16'>
+				<nav className='flex flex-col items-center gap-4 px-3 mt-4'>
+					<CustomButton
+						icon={
+							<FontAwesomeIcon
+								icon={btnIcon as IconProp}
+								className={cn('h-5 w-5 md:h-6 md:w-6', {
+									'h-6 w-6': isOpenDropdown,
+								})}
+							/>
+						}
+						iconPosition='left'
+						className={cn('bg-primary px-2 h-9 md:w-full', {
+							'w-full': isOpenDropdown,
+						})}>
+						<span
+							className={cn('hidden md:block font-semibold', {
+								block: isOpenDropdown,
+							})}>
+							Ajouter un évènement
+						</span>
+					</CustomButton>
+					<div className='bg-sidebar w-full h-[1px]' />
 
-				<SidebarMenu navigation={navigation} pathname={pathname} />
-			</nav>
-			<nav className='mt-auto flex flex-col items-center gap-4 px-2 sm:py-5'>
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<a
-								href='#'
-								className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'>
-								<Settings className='h-5 w-5' />
-								<span className='sr-only'>Settings</span>
-							</a>
-						</TooltipTrigger>
-						<TooltipContent side='right'>Settings</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-			</nav>
+					<SidebarMenu
+						navigation={navigation}
+						pathname={pathname}
+						className='w-full'
+						isOpenDropdown={isOpenDropdown}
+					/>
+				</nav>
+			</div>
 		</aside>
 	);
 };
