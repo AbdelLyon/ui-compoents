@@ -1,13 +1,13 @@
+import { cn } from '@/utils';
+import { CustomCardProps } from './types';
+import { ReactNode } from 'react';
 import {
 	Card,
 	CardContent,
-	CardTitle,
-	CardHeader,
 	CardFooter,
-} from '@/shared/ui/card';
-import { cn } from '@/shared/lib/utils';
-import { CustomCardProps } from './types';
-import { ReactNode } from 'react';
+	CardHeader,
+	CardTitle,
+} from '@/ui/card';
 
 export const CardImage = ({
 	children,
@@ -78,9 +78,9 @@ export const CustomCard = ({
 	return (
 		<Card
 			className={cn(
-				'border-foreground relative flex flex-col',
+				'border-border relative flex flex-col',
 				{
-					'border-foreground rounded-b-sm cursor-pointer transition duration-300 ease-in-out transform hover:shadow-lg':
+					'border-border rounded-b-sm cursor-pointer transition duration-300 ease-in-out transform hover:shadow-lg':
 						clickable,
 				},
 				className

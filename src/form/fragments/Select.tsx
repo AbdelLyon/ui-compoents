@@ -1,13 +1,13 @@
 import { memo, useCallback } from 'react';
 import { SelectProps } from '../types';
-import { Command, CommandItem, CommandList } from '../../shared/ui/command';
+import { Command, CommandItem, CommandList } from '@/ui/command';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '../../shared/lib/utils';
-import InputCustom from '../InputCustom';
-import { PopoverTrigger } from '../../shared/ui/popover';
+import { cn } from '@/utils';
+import { PopoverTrigger } from '@/ui/popover';
+import { Input } from '..';
 
 const Trigger = ({
-	width = '400px',
+	width,
 	className,
 	value,
 	selectionKeys = [],
@@ -20,7 +20,7 @@ const Trigger = ({
 		<PopoverTrigger asChild>
 			<div
 				className={cn(
-					'flex h-11 w-[400px] cursor-pointer items-center justify-between rounded-md border border-foreground bg-transparent px-3',
+					'flex h-11 cursor-pointer items-center justify-between rounded-md border border-border bg-transparent px-3',
 					className
 				)}
 				style={{
@@ -41,18 +41,14 @@ const Trigger = ({
 };
 
 const SearchOption = memo(
-	({
-		error = ' ',
-		onSearchChange,
-		placeholderSearch = '',
-	}: Partial<SelectProps>) => {
+	({ error, onSearchChange, placeholderSearch }: Partial<SelectProps>) => {
 		const handleSearchChange = useCallback(
 			(value: string) => onSearchChange?.(value),
 			[onSearchChange]
 		);
 
 		return (
-			<InputCustom
+			<Input
 				name='search'
 				className={`${error && 'border-red-600/50'}`}
 				handelChange={handleSearchChange}
@@ -66,13 +62,14 @@ const SearchOption = memo(
 
 const Select = memo(
 	({
-		placeholder = '',
-		options = [],
+		placeholder,
+		options,
 		onSelectChange,
-		value = '',
+		value,
 		setOpen,
-		selectionKeys = [],
+		selectionKeys,
 		observerRef,
+		className,
 	}: SelectProps) => {
 		const handleSelectChange = useCallback(
 			(currentValue: string) => {
@@ -90,10 +87,10 @@ const Select = memo(
 		);
 
 		return (
-			<Command>
-				<CommandList className='pr-4'>
+			<Command style={{ width: '99%' }} className={className}>
+				<CommandList className='pr-2 mb-2'>
 					<CommandItem
-						className='mb-1 py-2 text-sm'
+						className='mb-1 py-2 text-sm '
 						value={placeholder}
 						onSelect={handleSelectChange}>
 						{placeholder}
@@ -102,7 +99,7 @@ const Select = memo(
 						<CommandItem
 							key={item?.id}
 							ref={options.length === index + 1 ? observerRef : null}
-							className='flex justify-between py-2'
+							className={cn('flex justify-between py-2')}
 							value={item?.id}
 							onSelect={handleSelectChange}>
 							<p className='truncate'>
@@ -112,7 +109,7 @@ const Select = memo(
 								className={cn(
 									'mr-2 h-4 w-4',
 									value === item?.id
-										? 'text-green-600 opacity-100'
+										? 'text-green-600/80 opacity-100'
 										: 'opacity-0'
 								)}
 							/>

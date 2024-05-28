@@ -1,32 +1,27 @@
-import { Button } from "@/shared/ui/button";
-import { ButtonProps } from "./types";
-import { cn } from "../shared/lib/utils";
+import { Button } from '@/ui/button';
+import { ButtonProps } from './types';
+import { cn } from '@/utils';
 
-const CustomButton = ({
-  icon = undefined,
-  iconPosition = "right",
-  className,
-  children,
-  ...props
+export const CustomButton = ({
+	icon = undefined,
+	iconPosition = 'right',
+	className,
+	children,
+	...props
 }: ButtonProps<true> | ButtonProps<false>) => {
-  return (
-    <Button
-      {...props}
-      className={cn(className, {
-        "flex flex-row-reverse": iconPosition === "left" && icon,
-        "min-w-28": icon,
-      })}
-    >
-      <span
-        className={cn({
-          "flex-1": iconPosition === "left" || iconPosition === "right",
-        })}
-      >
-        {children}
-      </span>
-      {icon}
-    </Button>
-  );
+	return (
+		<Button
+			{...props}
+			className={cn(className, {
+				'flex flex-row-reverse': iconPosition === 'left' && icon,
+			})}>
+			<span
+				className={cn({
+					'flex-1': iconPosition === 'left' || iconPosition === 'right',
+				})}>
+				{children}
+			</span>
+			{icon}
+		</Button>
+	);
 };
-
-export default CustomButton;

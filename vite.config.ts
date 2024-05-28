@@ -7,11 +7,14 @@ import path from 'path';
 const modules = [
 	'providers',
 	'theme',
+	'hooks',
+	'utils',
 	'button',
 	'card',
-	'hooks',
 	'form',
 	'layout',
+	'sidebar',
+	'navbar',
 	'index',
 ];
 

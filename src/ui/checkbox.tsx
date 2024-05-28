@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import * as React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import { cn } from '../lib/utils';
+import { cn } from '@/utils';
 import { CheckIcon } from 'lucide-react';
 
 const Checkbox = React.forwardRef<
@@ -11,7 +11,7 @@ const Checkbox = React.forwardRef<
 	<CheckboxPrimitive.Root
 		ref={ref}
 		className={cn(
-			'peer h-[18px] w-[18px] shrink-0 rounded-sm border border-input focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-muted data-[state=checked]:text-primary-foreground',
+			'peer h-[18px] w-[18px] shrink-0 rounded-sm border border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-muted data-[state=checked]:text-primary-foreground',
 			className
 		)}
 		{...props}>

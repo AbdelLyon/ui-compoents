@@ -1,5 +1,5 @@
 import { Eye, EyeOff, Mail, Search } from 'lucide-react';
-import { cn } from '../../shared/lib/utils';
+import { cn } from '@/utils';
 import { Dispatch } from 'react';
 
 type Props = { className?: string };
@@ -41,7 +41,7 @@ export const PassowrIcon = ({
 export const SearchIcon = ({ className }: Props) => (
 	<Search
 		size={13}
-		className={cn(`text-muted-foreground right-3 -z-10 ${className} absolute`)}
+		className={cn(`text-muted-foreground right-3 ${className} absolute`)}
 		style={{ top: '50%', transform: 'translateY(-50%)' }}
 	/>
 );

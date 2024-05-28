@@ -7,6 +7,7 @@ import {
 import { beforeEach, describe, expect, it } from "vitest";
 import { mockPostsPaginate, posts } from "./mocks";
 import { useInfiniteQuery } from "../../hooks";
+import { Query } from "../types";
 
 describe("useCustomInfiniteQuery", () => {
   const queryKey: QueryKey = ["posts"];
@@ -20,7 +21,7 @@ describe("useCustomInfiniteQuery", () => {
     );
   });
 
-  const renderCustomQueryHook = (options: any) => {
+  const renderCustomQueryHook = (options: Query<unknown, unknown>) => {
     const { result, waitFor } = renderHook(() => useInfiniteQuery(options), {
       wrapper,
     });
@@ -75,7 +76,7 @@ describe("useCustomInfiniteQuery", () => {
     expect(result.current.data).toEqual(posts.slice(10, posts.length));
   });
 
-  const testSearchParam = (paramName: string, paramValue: any) => {
+  const testSearchParam = (paramName: string, paramValue: unknown) => {
     it(`should call useQuery with ${paramName} if passed`, async () => {
       const searchParams = { [paramName]: paramValue };
       const { result, waitFor } = renderCustomQueryHook({

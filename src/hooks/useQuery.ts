@@ -1,28 +1,26 @@
-import { useQuery as useReactQuery } from "@tanstack/react-query";
-import { Query } from "./types";
+import { useQuery as useReactQuery } from '@tanstack/react-query';
+import { Query } from './types';
 
-const useQuery = <Data, Request>({
-  queryKey,
-  request,
-  search,
-  enabled,
+export const useQuery = <Data, Request>({
+	queryKey,
+	request,
+	search,
+	enabled,
 }: Query<Data, Request>) => {
-  const { data, isLoading, isFetching, isSuccess, refetch } = useReactQuery({
-    queryKey,
-    queryFn: () =>
-      request({
-        search,
-      }),
-    enabled,
-  });
+	const { data, isLoading, isFetching, isSuccess, refetch } = useReactQuery({
+		queryKey,
+		queryFn: () =>
+			request({
+				search,
+			}),
+		enabled,
+	});
 
-  return {
-    data,
-    isLoading,
-    isFetching,
-    isSuccess,
-    refetch,
-  };
+	return {
+		data,
+		isLoading,
+		isFetching,
+		isSuccess,
+		refetch,
+	};
 };
-
-export default useQuery;
