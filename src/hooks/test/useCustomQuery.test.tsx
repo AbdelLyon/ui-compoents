@@ -8,6 +8,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { waitFor } from "@testing-library/react";
 import { mockPosts, posts } from "./mocks";
 import { useQuery } from "../../hooks";
+import { Query } from "../types";
 
 describe("useCustomQuery", () => {
   const queryKey: QueryKey = ["posts"];
@@ -23,7 +24,7 @@ describe("useCustomQuery", () => {
     );
   });
 
-  const renderCustomQueryHook = (options: any) => {
+  const renderCustomQueryHook = (options: Query<unknown, unknown>) => {
     const { result, waitFor } = renderHook(() => useQuery(options), {
       wrapper,
     });
@@ -71,7 +72,7 @@ describe("useCustomQuery", () => {
     expect(result.current.data).toEqual(posts);
   });
 
-  const testSearchParam = (paramName: string, paramValue: any) => {
+  const testSearchParam = (paramName: string, paramValue: unknown) => {
     it(`should call useQuery with ${paramName} if passed`, async () => {
       const searchParams = { [paramName]: paramValue };
       const { result, waitFor } = renderCustomQueryHook({
